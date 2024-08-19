@@ -1,0 +1,51 @@
+live_config_reload = true
+
+# Catppuccin theme
+#import = ["~/.config/alacritty/catppuccin/catppuccin.toml"]
+
+# Dracula Theme
+import = ["~/.config/alacritty/dracula/dracula.toml"]
+
+[env]
+TERM = "xterm-256color"
+
+# Tmux start
+#[shell]
+#program = "/bin/zsh"
+#args = ["-l", "-c", "tmux"]
+
+
+[window]
+dynamic_padding = false
+opacity = 1
+
+
+[window.dimensions]
+columns = 200
+lines = 40
+
+[window.padding]
+x = 10
+y = 10
+
+[font]
+size = 15
+
+[selection]
+save_to_clipboard = true
+
+[font.bold]
+family = "JetBrains Mono"
+style = "Bold"
+
+[font.italic]
+family = "JetBrains Mono"
+style = "Italic"
+
+[font.normal]
+family = "JetBrains Mono"
+style = "Regular"
+
+[font.bold_italic]
+family = "JetBrains Mono"
+style = "Bold Italic"
