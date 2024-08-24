@@ -10,8 +10,8 @@ import = ["~/.config/alacritty/dracula/dracula.toml"]
 TERM = "xterm-256color"
 
 # Tmux start
-#[shell]
-#program = "/bin/zsh"
+[shell]
+program = "/bin/tmux"
 #args = ["-l", "-c", "tmux"]
 
 

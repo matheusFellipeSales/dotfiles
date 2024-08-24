@@ -18,7 +18,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # ============================== THEMES ============================== #
 
 #ZSH_THEME="simplerich"
-#ZSH_THEME="powerlevel10k/powerlevel10k" # Powerlevel 10k Theme
+ZSH_THEME="powerlevel10k/powerlevel10k" # Powerlevel 10k Theme
 #ZSH_THEME="spaceship" # Spaceship theme
 
 
@@ -130,4 +130,4 @@ export EDITOR=nano
 eval "$(zoxide init --cmd cd zsh)"
 
 # Starship
-eval "$(starship init zsh)"
+#eval "$(starship init zsh)"

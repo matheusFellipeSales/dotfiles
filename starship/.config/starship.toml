@@ -40,6 +40,7 @@ style = "bold yellow"
 disabled = false
 
 [git_branch]
+symbol = " "
 format = "[$symbol$branch]($style) "
 style = "bold pink"
 
@@ -50,13 +51,13 @@ style = "bold pink"
 #              LINGUAGENS
 ################################################
 [docker_context]
-format = '[🐋 $context](blue bold) '
+format = '[$symbol$context](blue bold) '
 
 [php]
-format = '[🐘 $version](purple bold) '
+format = '[$symbol$version](purple bold) '
 
 [python]
-format = '[🐍 $version](yellow bold) '
+format = '[$symbol$version](yellow bold) '
 ################################################
 #              Dracula theme
 ################################################
