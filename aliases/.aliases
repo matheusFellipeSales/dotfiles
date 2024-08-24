@@ -1,0 +1,54 @@
+############################################################################
+# ============================= CUSTOM ALIASES =========================== #
+############################################################################
+# Este arquivo deve estar localizado em ~/.aliases
+# Aliases de cunho geral, alguns podem necessitar de pacotes /
+# adicionais que não vem pré instalados no sistema.
+alias "aliases"='$EDITOR ~/.aliases'                      # Editar este arquivo.
+alias trace='traceroute'                                  # Traceroute
+alias ips='ip -c -br a'                                   # Exibe ips do host de forma organizada.
+alias ..='cd ..'                                          # Atalho para voltar uma pasta.
+alias nmap='sudo nmap -sS'                                # nmap standard alias.
+alias fping='fping -a -q -g'                              # Realiza ping para um bloco de ips.
+alias end='cd ~'                                          # Volta para a raiz do usuário Cisco Like.
+alias ping='ping -O'                                      # Modifica o ping para exibir as percas.
+alias shut='shutdown -h now'                              # Desliga o pc.
+alias speedtest='speedtest -s 55720'                      # Speed test Araujosat server.
+alias neofetch='fastfetch'                                # Neofetch descontinuado.
+alias ls='eza --icons=always'				  # Icons on ls
+
+############################################################################
+# ================================ YAY =================================== #
+############################################################################
+# Utilitario que ajudar a manipular o aur.
+alias upd='yay -Syyu && flatpak update'                   # Atualiza o sitema (recomendado).
+alias yi='yay -S'                                         # instala pacote.
+alias yr='yay -Rs'                                        # Remove pacote.
+alias yrr='sudo pacman -R $(pacman -Qtdq)'                # Limpa pacotes não orfãos.
+alias yc='yay -Scc'                                       # Remove pacotes em cache.
+
+
+############################################################################
+# ============================= DISTRO BOX =============================== #
+############################################################################
+# Depende do pacote distrobox instalado no sistema.
+alias ubuntu='distrobox-enter ubuntu'                    # distrobox enter ubuntu
+alias arch='distrobox-enter arch'                        # distrobox enter arch
+
+############################################################################
+# ============================= VAGRANT ================================== #
+############################################################################
+# Depende do pacote vagrant instalado no sistema.
+alias vd='vagrant destroy'                                # Destroi as VMs.
+alias vu='vagrant up'                                     # Sobe as VMs.
+alias vs='vagrant up &&  vagrant ssh'                     # SSH nas VMs.
+alias vh='vagrant halt'                                   # Desliga as VMs.
+
+
+############################################################################
+# ============================= DOCKER  ================================== #
+############################################################################
+# Depende do docker obviamente.
+alias dc='docker compose'                                               # Atalho para o docker compose.
+alias 'docker volume rm all'='docker volume rm $(docker volume ls -q)'  # Remove todos os volumes.
+alias 'docker rmi all'='docker image rm $(docker images -q)'            # Remove todas as imagens.
