@@ -124,10 +124,13 @@ tooltip label {
 #tray {
     border-bottom: transparent;
 }
-#tray:hover {
-    background: rgba(0, 0, 0, 0.2);
+#tray menu * {
+    background-color: rgba(30, 30, 46, 1);
+    color: #cdd6f4;
+    padding: 0.4em;
+}
+#tray menu *:hover {
     color: #cba6f7;
-    border-bottom: 3px solid #cba6f7;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
