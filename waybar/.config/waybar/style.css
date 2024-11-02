@@ -80,6 +80,7 @@ tooltip label {
 #idle_inhibitor,
 #custom-notification,
 #sway-scratchpad,
+#bluetooth,
 #mpd {
     padding: 0 10px;
     margin: 6px 3px;
@@ -109,6 +110,7 @@ tooltip label {
 #idle_inhibitor:hover,
 #custom-notification:hover,
 #sway-scratchpad:hover,
+#bluetooth:hover,
 #mpd:hover {
     background: rgba(0, 0, 0, 0.2);
 }
@@ -192,3 +194,18 @@ tooltip label {
     color: #df8e1d;
     border-bottom: 3px solid #df8e1d;
 }
+
+/*
+ * BOTAO DE BLUETOOTH
+*/
+#bluetooth {
+    color: #89b4fa;
+    border-bottom: 3px solid #89b4fa;
+}
+#bluetooth.off,
+#bluetooth.disabled {
+    color: #f38ba8;
+    border-bottom: 3px solid #f38ba8;
+}
+
+
