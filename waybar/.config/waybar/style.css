@@ -165,7 +165,7 @@ tooltip label {
 }
 
 #network.disconnected {
-    background-color: #df8e1d;
+    color: #df8e1d;
     border-bottom: 3px solid #df8e1d;
 }
 
