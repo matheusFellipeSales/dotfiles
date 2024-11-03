@@ -43,48 +43,43 @@
     },
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%d-%m-%Y}"
+        "format": "󱑆 {:%H:%M}",
+        "format-alt": "󱑆 {:%d-%m-%Y}"
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "{ifname} via {gwaddr} ",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ⚠",
+        "format-ethernet": "󰈁 {ipaddr}/{cidr}",
+        "tooltip-format": "󰈁 {ifname} via {gwaddr}",
+        "format-linked": "󰈂{ifname} (No IP)",
+        "format-disconnected": "󰈂 Disconnected",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     "custom/vpn-toggle": {
-        "format": "{}",
+        "format": "󰫄 {}",
         "exec": "bash $HOME/.config/waybar/scripts/vpn_toggle.sh",
-        "interval": 10,
+        "interval": 5,
         "on-click": "bash $HOME/.config/waybar/scripts/vpn_toggle.sh toggle",
         "return-type": "json"
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        },
+        "format": "{volume}% {format_source}",
+        "format-muted": "Mudo {format_source}",
+
+        "format-bluetooth": " {volume}% {format_source}",
+        "format-bluetooth-muted": "   {format_source}",
+
+        "format-source": " {volume}%",
+        "format-source-muted": "  Mudo",
+
         "on-click": "pavucontrol"
     },
     "bluetooth": {
     // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
         "format": " {status}",
         "format-disabled": "", // an empty format will hide the module
-        "format-connected": " {num_connections} connected",
+        "format-connected": " {num_connections} connected",
         "tooltip-format": "{controller_alias}\t{controller_address}",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
