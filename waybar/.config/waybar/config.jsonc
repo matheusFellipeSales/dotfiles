@@ -14,7 +14,8 @@
     ],
     "modules-right": [
         "pulseaudio",
-        "network",
+        // "network",
+        "custom/latencia",
         "custom/vpn-toggle",
         "bluetooth",
         "clock",
@@ -24,18 +25,18 @@
     "hyprland/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
-        "warp-on-scroll": false,
-        "format": "{icon}",
-        "format-icons": {
-             "1": "",
-             "2": "󰨞",
-             "3": "",
-             "4": "󰙯",
-             "5": ""
-        },
-        "persistent-workspaces": {
-            "*" : 5
-        }
+        "warp-on-scroll": false
+        // "format": "{icon}",
+        // "format-icons": {
+        //      "1": "",
+        //      "2": "󰨞",
+        //      "3": "",
+        //      "4": "󰙯",
+        //      "5": ""
+        // },
+        // "persistent-workspaces": {
+        //     "*" : 5
+        // }
     },
     "tray": {
         // "icon-size": 21,
@@ -54,6 +55,12 @@
         "format-linked": "󰈂{ifname} (No IP)",
         "format-disconnected": "󰈂 Disconnected",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    },
+    "custom/latencia": {
+        "format": "󰓅 {}",
+        "exec": "bash $HOME/.config/waybar/scripts/latencia.sh",
+        "interval": 5,
+        "return-type": "json"
     },
     "custom/vpn-toggle": {
         "format": "󰫄 {}",
