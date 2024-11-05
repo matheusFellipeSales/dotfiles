@@ -13,30 +13,30 @@
         "hyprland/window"
     ],
     "modules-right": [
+        "tray",
         "pulseaudio",
-        // "network",
         "custom/latencia",
         "custom/vpn-toggle",
         "bluetooth",
         "clock",
-        "tray"
+        "custom/notification"
     ],
     // Modules configuration
     "hyprland/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
-        "warp-on-scroll": false
-        // "format": "{icon}",
-        // "format-icons": {
-        //      "1": "",
-        //      "2": "󰨞",
-        //      "3": "",
-        //      "4": "󰙯",
-        //      "5": ""
-        // },
-        // "persistent-workspaces": {
-        //     "*" : 5
-        // }
+        "warp-on-scroll": false,
+        "format": "{icon}",
+        "format-icons": {
+             "1": "1-",
+             "2": "2-󰨞",
+             "3": "3-",
+             "4": "4-󰙯",
+             "5": "5-"
+        },
+        "persistent-workspaces": {
+            "*" : 5
+        }
     },
     "tray": {
         // "icon-size": 21,
@@ -91,5 +91,21 @@
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
         "on-click": "blueman-manager"
+    },
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+          "notification": "<span foreground='#f38ba8'><sup></sup></span>",
+          "none": "",
+          "dnd-notification": "<span foreground='#f38ba8'><sup></sup></span>",
+          "dnd-none": ""
+        },
+        "return-type": "json",
+        // "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
     }
 }

@@ -2,7 +2,7 @@
     all: unset;
     border: none;
     border-radius: 0;
-    font-family: JetBrains Mono;
+    font-family: JetBrainsMono Nerd Font;
     font-size: 13px;
     font-weight: 500;
     min-height: 0;
@@ -50,7 +50,7 @@ tooltip label {
 
 #workspaces button.active {
     color: #cba6f7;
-    background: rgba(0, 0, 0, 0.2);
+    /* background: rgba(0, 0, 0, 0.2); */
     border-bottom: 3px solid #cba6f7;
 }
 
@@ -112,6 +112,7 @@ tooltip label {
 #custom-notification:hover,
 #sway-scratchpad:hover,
 #bluetooth:hover,
+#custom-notification:hover,
 #custom-latencia:hover,
 #mpd:hover {
     background: rgba(0, 0, 0, 0.2);
@@ -229,4 +230,8 @@ tooltip label {
     border-bottom: 3px solid #f38ba8;
 }
 
-
+#custom-notification {
+    color: #cba6f7;
+    border-bottom: transparent;
+    /* border-bottom: 3px solid transparent; */
+}
