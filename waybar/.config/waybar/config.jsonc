@@ -44,8 +44,8 @@
     },
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "󱑆 {:%H:%M}",
-        "format-alt": "󱑆 {:%d-%m-%Y}"
+        "format": "󱑆 {:%H:%M %d-%m-%Y}"
+        // "format-alt": "󱑆 {:%d-%m-%Y}"
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
