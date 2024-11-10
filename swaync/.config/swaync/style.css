@@ -2,6 +2,7 @@
   all: unset;
   font-size: 14px;
   font-family: "JetBrains Mono";
+  font-weight: 500;
   transition: 200ms;
 }
 
