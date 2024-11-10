@@ -1,3 +1,5 @@
+@import "mocha.css";
+
 * {
     all: unset;
     border: none;
@@ -9,9 +11,9 @@
 }
 
 window#waybar {
-    background: #cdd6f4;
-    background-color: rgba(30, 30, 46, 1);
-    color: #cdd6f4;
+    background: @text;
+    background-color: @mantle;
+    color: @text;
     transition-property: background-color;
     transition-duration: .5s;
     border-radius: 0;
@@ -22,12 +24,12 @@ window#waybar.hidden {
 }
 
 tooltip {
-  background: #1e1e2e;
-  border: 1px solid #45475a;
+  background: @base;
+  border: 1px solid @surface1;
 }
 
 tooltip label {
-  color: #cdd6f4;
+  color: @text;
 }
 
 #workspaces button {
@@ -38,30 +40,32 @@ tooltip label {
 }
 
 #workspaces button:hover {
+    color: @mauve;
     background: rgba(0, 0, 0, 0.2);
-    color: #cba6f7;
-    border-bottom: 3px solid #cba6f7;
-}
-
-#workspaces button.focused {
-    background-color: #585b70;
-    border-bottom: 3px solid #cdd6f4;
+    border-bottom: 3px solid @mauve;
 }
 
 #workspaces button.active {
-    color: #cba6f7;
-    /* background: rgba(0, 0, 0, 0.2); */
-    border-bottom: 3px solid #cba6f7;
+    color: @mauve;
+    border-bottom: 3px solid @mauve;
+}
+
+#workspaces button.persistent {
+    color: @mauve;
+}
+
+#workspaces button.empty {
+    color: @text;
 }
 
 #workspaces button.urgent {
-    color: #f38ba8;
-    border-bottom: 3px solid #f38ba8;
+    color: @red;
+    border-bottom: 3px solid @red;
 }
 
 #mode {
-    background-color: #585b70;
-    border-bottom: 3px solid #cdd6f4;
+    background-color: @surface2;
+    border-bottom: 3px solid @text;
 }
 
 #clock,
@@ -91,8 +95,8 @@ tooltip label {
     margin: 0 4px;
 
     /* mudar em cada modulo */
-    color: #cdd6f4;
-    border-bottom: 3px solid #cba6f7;
+    color: @text;
+    border-bottom: 3px solid @mauve;
 }
 
 #clock:hover,
@@ -131,11 +135,11 @@ tooltip label {
 }
 #tray menu * {
     background-color: rgba(30, 30, 46, 1);
-    color: #cdd6f4;
+    color: @text;
     padding: 0.4em;
 }
 #tray menu *:hover {
-    color: #cba6f7;
+    color: @mauve;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
@@ -153,23 +157,22 @@ tooltip label {
  * BOTAO DE RELOGIO
 */
 #clock {
-    color: #f38ba8;
-    border-bottom: 3px solid #f38ba8;
+    color: @red;
+    border-bottom: 3px solid @red;
 }
-
 
 
 /*
  * BOTAO DE NETWORK
 */
 #network {
-    color: #a6e3a1;
-    border-bottom: 3px solid #a6e3a1;
+    color: @green;
+    border-bottom: 3px solid @green;
 }
 
 #network.disconnected {
-    color: #df8e1d;
-    border-bottom: 3px solid #df8e1d;
+    color: @maroon;
+    border-bottom: 3px solid @maroon;
 }
 
 
@@ -177,18 +180,18 @@ tooltip label {
  * BOTAO DE LATENCIA
 */
 #custom-latencia {
-    color: #a6e3a1;
-    border-bottom: 3px solid #a6e3a1;
+    color: @green;
+    border-bottom: 3px solid @green;
 }
 
 #custom-latencia.warning {
-    color: #df8e1d;
-    border-bottom: 3px solid #df8e1d;
+    color: @maroon;
+    border-bottom: 3px solid @maroon;
 }
 
 #custom-latencia.disconnected {
-    color: #f38ba8;
-    border-bottom: 3px solid #f38ba8;
+    color: @red;
+    border-bottom: 3px solid @red;
 }
 
 
@@ -196,42 +199,42 @@ tooltip label {
  * BOTAO DE AUDIO
 */
 #pulseaudio {
-    color: #cba6f7;
-    border-bottom: 3px solid #cba6f7;
+    color: @mauve;
+    border-bottom: 3px solid @mauve;
 }
 
 #pulseaudio.muted {
-    color: #cba6f7;
-    border-bottom: 3px solid #cba6f7;
+    color: @mauve;
+    border-bottom: 3px solid @mauve;
 }
 
 /*
  * BOTAO DE VPN
 */
 #custom-vpn-toggle {
-    color: #a6e3a1;
-    border-bottom: 3px solid #a6e3a1;
+    color: @green;
+    border-bottom: 3px solid @green;
 }
 #custom-vpn-toggle.vpn-off {
-    color: #df8e1d;
-    border-bottom: 3px solid #df8e1d;
+    color: @maroon;
+    border-bottom: 3px solid @maroon;
 }
 
 /*
  * BOTAO DE BLUETOOTH
 */
 #bluetooth {
-    color: #89b4fa;
-    border-bottom: 3px solid #89b4fa;
+    color: @blue;
+    border-bottom: 3px solid @blue;
 }
 #bluetooth.off,
 #bluetooth.disabled {
-    color: #f38ba8;
-    border-bottom: 3px solid #f38ba8;
+    color: @red;
+    border-bottom: 3px solid @red;
 }
 
 #custom-notification {
-    color: #cba6f7;
+    color: @mauve;
     border-bottom: transparent;
     /* border-bottom: 3px solid transparent; */
 }
