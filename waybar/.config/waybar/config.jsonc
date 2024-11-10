@@ -28,11 +28,11 @@
         "warp-on-scroll": false,
         "format": "{icon}",
         "format-icons": {
-             "1": "1 ",
-             "2": "2 󰨞",
-             "3": "3 ",
-             "4": "4 󰙯",
-             "5": "5 "
+             "1": "一 ",
+             "2": "二 󰨞",
+             "3": "三 ",
+             "4": "四 ",
+             "5": "五 "
         },
         "persistent-workspaces": {
             "*" : 5
@@ -72,13 +72,13 @@
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
         "format": "{volume}% {format_source}",
-        "format-muted": "Mudo {format_source}",
+        "format-muted": "off {format_source}",
 
         "format-bluetooth": " {volume}% {format_source}",
-        "format-bluetooth-muted": "   {format_source}",
+        "format-bluetooth-muted": "  {format_source}",
 
         "format-source": " {volume}%",
-        "format-source-muted": "<span foreground='#f38ba8'> Mudo</span>",
+        "format-source-muted": "<span foreground='#f38ba8'> off</span>",
 
         "on-click": "pavucontrol"
     },
