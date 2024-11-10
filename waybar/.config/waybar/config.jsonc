@@ -63,7 +63,7 @@
         "return-type": "json"
     },
     "custom/vpn-toggle": {
-        "format": "󰫄 {}",
+        "format": "󰛳 {}",
         "exec": "bash $HOME/.config/waybar/scripts/vpn_toggle.sh",
         "interval": 5,
         "on-click": "bash $HOME/.config/waybar/scripts/vpn_toggle.sh toggle",
