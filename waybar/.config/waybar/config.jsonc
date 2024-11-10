@@ -96,10 +96,10 @@
         "tooltip": false,
         "format": "{icon}",
         "format-icons": {
-          "notification": "<span foreground='#f38ba8'><sup></sup></span>",
-          "none": "",
-          "dnd-notification": "<span foreground='#f38ba8'><sup></sup></span>",
-          "dnd-none": ""
+          "notification": "<span foreground='#f38ba8'><sup></sup></span>",
+          "none": "",
+          "dnd-notification": "<span foreground='#f38ba8'><sup></sup></span>",
+          "dnd-none": ""
         },
         "return-type": "json",
         // "exec-if": "which swaync-client",
