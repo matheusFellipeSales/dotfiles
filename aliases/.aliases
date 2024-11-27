@@ -22,12 +22,12 @@ alias ls='eza --icons=always'				  # Icons on ls
 # ================================ YAY =================================== #
 ############################################################################
 # Utilitario que ajudar a manipular o aur.
-alias upd='yay -Syyu && flatpak update'                   # Atualiza o sitema (recomendado).
-alias yi='yay -S'                                         # instala pacote.
-alias yr='yay -Rs'                                        # Remove pacote.
-alias yrr='sudo pacman -R $(pacman -Qtdq)'                # Limpa pacotes não orfãos.
+alias upd='yay -Syyu && flatpak update'                   # Atualiza o sitema e flatpaks(recomendado).
+alias yu='yay -Syyu'                                      # Atualiza o sistema
+alias yi='yay -S'                                         # Instala pacote.
+alias yr='yay -Rns'                                       # Remove pacote.
+alias yrr='yay -Rns $(pacman -Qtdq)'                      # Limpa pacotes orfãos.
 alias yc='yay -Scc'                                       # Remove pacotes em cache.
-
 
 ############################################################################
 # ============================= DISTRO BOX =============================== #
