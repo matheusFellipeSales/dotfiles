@@ -16,7 +16,7 @@ alias shut='shutdown -h now'                              # Desliga o pc.
 alias speedtest='speedtest -s 55720'                      # Speed test Araujosat server.
 alias neofetch='fastfetch'                                # Neofetch descontinuado.
 alias ls='eza --icons=always'				  # Icons on ls
-alias ssh='kitty +kitten ssh'                             # Apenas para o terminal kitty
+# alias ssh='kitty +kitten ssh'                             # Apenas para o terminal kitty
 
 ############################################################################
 # ================================ YAY =================================== #
@@ -53,3 +53,10 @@ alias vh='vagrant halt'                                   # Desliga as VMs.
 alias dc='docker compose'                                               # Atalho para o docker compose.
 alias 'docker volume rm all'='docker volume rm $(docker volume ls -q)'  # Remove todos os volumes.
 alias 'docker rmi all'='docker image rm $(docker images -q)'            # Remove todas as imagens.
+
+############################################################################
+# ========================= JELLYFIN DOCKER ============================== #
+############################################################################
+alias 'jelly-up'='docker compose -f /home/matheus/Documentos/jellyfin/docker-compose.yml up -d'
+alias 'jelly-down'='docker compose -f /home/matheus/Documentos/jellyfin/docker-compose.yml down'
+alias 'jelly-reload'='jelly-down && jelly-up'
