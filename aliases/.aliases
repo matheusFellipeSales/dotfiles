@@ -28,6 +28,7 @@ alias yi='yay -S'                                         # Instala pacote.
 alias yr='yay -Rns'                                       # Remove pacote.
 alias yrr='yay -Rns $(pacman -Qtdq)'                      # Limpa pacotes orfãos.
 alias yc='yay -Scc'                                       # Remove pacotes em cache.
+alias yro='yay -Rcns $(yay -Qdtq)'                        # Remove pacotes orfãos com suas dependências
 
 ############################################################################
 # ============================= DISTRO BOX =============================== #
