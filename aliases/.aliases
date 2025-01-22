@@ -51,9 +51,11 @@ alias vh='vagrant halt'                                   # Desliga as VMs.
 # ============================= DOCKER  ================================== #
 ############################################################################
 # Depende do docker obviamente.
-alias dc='docker compose'                                               # Atalho para o docker compose.
-alias 'docker volume rm all'='docker volume rm $(docker volume ls -q)'  # Remove todos os volumes.
-alias 'docker rmi all'='docker image rm $(docker images -q)'            # Remove todas as imagens.
+alias dc='docker compose'                                                             # Atalho para o docker compose.
+alias 'docker volume rm all'='docker volume rm $(docker volume ls -q)'                # Remove todos os volumes.
+alias 'docker rmi all'='docker image rm $(docker images -q)'                          # Remove todas as imagens.
+alias 'db:up'='docker compose -f ~/Documentos/Docker/banco/docker-compose.yml up -d'  # Liga o banco de dados.
+alias 'db:down'='docker compose -f ~/Documentos/Docker/banco/docker-compose.yml down' # Desliga o banco de dados.
 
 ############################################################################
 # ========================= JELLYFIN DOCKER ============================== #
