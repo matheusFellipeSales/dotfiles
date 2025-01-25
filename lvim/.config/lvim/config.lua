@@ -5,10 +5,8 @@
 -- Discord: https://discord.com/invite/Xb9B4Ny
 
 -- keybinds
-lvim.keys.normal_mode["S-h"] = ":bprevious<CR>"
-lvim.keys.normal_mode["S-l"] = ":bnext<CR>"
-
-lvim.keys.normal_mode["<S-x>"] = ":BufferKill<CR>"
+lvim.keys.normal_mode["<S-h>"] = ":bprevious<CR>"
+lvim.keys.normal_mode["<S-l>"] = ":bnext<CR>"
 
 lvim.format_on_save = true
 
