@@ -17,10 +17,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # ============================== THEMES ============================== #
 
-#ZSH_THEME="simplerich"
 ZSH_THEME="powerlevel10k/powerlevel10k" # Powerlevel 10k Theme
-#ZSH_THEME="spaceship" # Spaceship theme
-
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -114,7 +111,7 @@ export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export EDITOR=nano
+export EDITOR=lvim
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -122,16 +119,12 @@ export EDITOR=nano
 # To customize alias, run `alias config` or edit ~/.aliases
 [[ ! -f ~/.aliases ]] || source ~/.aliases
 
-# Pokemon
-#pokemon-colorscripts -r -n "charmander" --no-title
-#pokemon-colorscripts -r --no-title
-
 # Zoxide (Next gen change directory)
 eval "$(zoxide init --cmd cd zsh)"
-
-# Starship
-#eval "$(starship init zsh)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# to lunarvim
+export PATH=/home/matheus/.local/bin:$PATH

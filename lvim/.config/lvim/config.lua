@@ -8,8 +8,8 @@
 lvim.keys.normal_mode["S-h"] = ":bprevious<CR>"
 lvim.keys.normal_mode["S-l"] = ":bnext<CR>"
 
-lvim.keys.normal_mode["<C-s>"] = ":w!<CR>"
 lvim.keys.normal_mode["<S-x>"] = ":BufferKill<CR>"
+
 lvim.format_on_save = true
 
 -- prettier support
@@ -20,9 +20,6 @@ formatters.setup {
     filetypes = { "typescript", "typescriptreact" },
   },
 }
-
--- tailwindcss intelicense
-require("lvim.lsp.manager").setup "tailwindcss"
 
 -- terminal toggle configuration
 lvim.builtin.which_key.mappings["t"] = {
