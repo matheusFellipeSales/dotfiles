@@ -1,0 +1,14 @@
+font-family = "JetBrainsMono NF Medium"
+font-size = 14
+theme = catppuccin-mocha
+cursor-style = block
+cursor-style-blink = true
+shell-integration-features = no-cursor
+background-opacity = 0.9
+background-blur = true
+copy-on-select = clipboard
+window-padding-balance = true
+window-padding-x = 6
+window-padding-y = 2
+app-notifications = no-clipboard-copy
+
