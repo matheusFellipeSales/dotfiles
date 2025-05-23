@@ -11,4 +11,5 @@ window-padding-balance = true
 window-padding-x = 6
 window-padding-y = 2
 app-notifications = no-clipboard-copy
+confirm-close-surface = false
 
