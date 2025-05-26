@@ -15,8 +15,9 @@ alias ping='ping -O'                                      # Modifica o ping para
 alias shut='shutdown -h now'                              # Desliga o pc.
 alias speedtest='speedtest -s 55720'                      # Speed test Araujosat server.
 alias neofetch='fastfetch'                                # Neofetch descontinuado.
-alias ls='eza --icons=always'				  # Icons on ls
-# alias ssh='kitty +kitten ssh'                             # Apenas para o terminal kitty
+alias ls='eza --icons=always'                             # Icons on ls
+alias vim='nvim'                                          # Vim vira nvim sempre.
+alias nano='nvim'                                         # Nano vira nvim sempre.
 
 ############################################################################
 # ================================ YAY =================================== #
