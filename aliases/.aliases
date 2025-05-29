@@ -18,6 +18,7 @@ alias neofetch='fastfetch'                                # Neofetch descontinua
 alias ls='eza --icons=always'                             # Icons on ls
 alias vim='nvim'                                          # Vim vira nvim sempre.
 alias nano='nvim'                                         # Nano vira nvim sempre.
+alias vi='nvim'                                           # Vi vira nvim sempre.
 
 ############################################################################
 # ================================ YAY =================================== #
