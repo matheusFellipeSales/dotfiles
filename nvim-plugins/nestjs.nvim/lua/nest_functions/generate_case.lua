@@ -1,25 +1,23 @@
 local M = {}
 
 local function get_target_dir()
-	-- Verifica se estamos no Mini Files
-	if vim.bo.filetype == "minifiles" then
-		-- Debug: mostra informações sobre o buffer atual
-		local bufname = vim.api.nvim_buf_get_name(0)
-		print("Buffer name: " .. bufname)
-		print("Working dir: " .. vim.fn.getcwd())
-
-		-- Tenta extrair o diretório do nome do buffer
-		if bufname and bufname ~= "" then
-			local dir = vim.fn.fnamemodify(bufname, ":h")
-			if vim.fn.isdirectory(dir) == 1 and dir ~= vim.fn.getcwd() then
-				print("Usando diretório do buffer: " .. dir)
-				return dir
+	-- Tenta pegar o diretório atual do item selecionado no explorer do Snacks se estiver aberto
+	local explorer_pickers = Snacks.picker.get({ source = "explorer" })
+	if #explorer_pickers > 0 then
+		local picker = explorer_pickers[1]
+		if picker then
+			-- Pega o item atual selecionado
+			local current_item = picker:current()
+			if current_item and current_item.file then
+				-- Se é um diretório, usa ele diretamente
+				if vim.fn.isdirectory(current_item.file) == 1 then
+					return current_item.file
+				else
+					-- Se é um arquivo, pega o diretório pai
+					return vim.fn.fnamemodify(current_item.file, ":h")
+				end
 			end
 		end
-
-		-- Se estivermos no Mini Files, usa o diretório de trabalho atual
-		print("Usando working directory: " .. vim.fn.getcwd())
-		return vim.fn.getcwd()
 	end
 
 	-- Se temos um buffer de arquivo válido, usa o diretório dele
