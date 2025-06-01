@@ -10,4 +10,3 @@ end, {})
 vim.keymap.set("n", "U", function()
 	require("nest_functions").make_use_case()
 end, { desc = "Criar Use Case + teste" })
-
