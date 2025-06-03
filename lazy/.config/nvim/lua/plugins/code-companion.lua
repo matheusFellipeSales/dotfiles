@@ -12,16 +12,16 @@ return {
       mode = { "n", "v" },
     },
     {
-      "<Leader>a",
+      "<Leader>aa",
       "<cmd>CodeCompanionChat Toggle<CR>",
       desc = "Toggle a chat buffer",
       mode = { "n", "v" },
     },
     {
-      "<LocalLeader>a",
-      "<cmd>CodeCompanionChat Add<CR>",
-      desc = "Add code to a chat buffer",
-      mode = { "v" },
+      "<Leader>an",
+      "<cmd>CodeCompanionChat New<CR>",
+      desc = "Abrir novo chat sem histórico",
+      mode = { "n", "v" },
     },
   },
   opts = {
