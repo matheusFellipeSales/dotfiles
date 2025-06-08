@@ -1,23 +1,35 @@
 local M = {}
 
+local function get_neotree_selected_path()
+	-- Função específica para pegar o caminho selecionado no neo-tree
+	local success, neotree_manager = pcall(require, "neo-tree.sources.manager")
+	if not success then
+		return nil
+	end
+
+	local state = neotree_manager.get_state("filesystem")
+	if not state or not state.tree then
+		return nil
+	end
+
+	local node = state.tree:get_node()
+	if not node then
+		return nil
+	end
+
+	local path = node:get_id()
+	if node.type == "directory" then
+		return path
+	else
+		return vim.fn.fnamemodify(path, ":h")
+	end
+end
+
 local function get_target_dir()
-	-- Tenta pegar o diretório atual do item selecionado no explorer do Snacks se estiver aberto
-	local explorer_pickers = Snacks.picker.get({ source = "explorer" })
-	if #explorer_pickers > 0 then
-		local picker = explorer_pickers[1]
-		if picker then
-			-- Pega o item atual selecionado
-			local current_item = picker:current()
-			if current_item and current_item.file then
-				-- Se é um diretório, usa ele diretamente
-				if vim.fn.isdirectory(current_item.file) == 1 then
-					return current_item.file
-				else
-					-- Se é um arquivo, pega o diretório pai
-					return vim.fn.fnamemodify(current_item.file, ":h")
-				end
-			end
-		end
+	-- Primeiro tenta pegar o diretório do neo-tree
+	local neotree_path = get_neotree_selected_path()
+	if neotree_path then
+		return neotree_path
 	end
 
 	-- Se temos um buffer de arquivo válido, usa o diretório dele

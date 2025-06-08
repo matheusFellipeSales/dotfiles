@@ -6,7 +6,7 @@ vim.api.nvim_create_user_command("Case", function()
 	require("nest_functions").make_use_case()
 end, {})
 
--- Keybinding para criar Use Case + teste com a tecla U no explorer
+-- Keybinding para criar Use Case + teste com a tecla U no neo-tree
 vim.keymap.set("n", "U", function()
 	require("nest_functions").make_use_case()
 end, { desc = "Criar Use Case + teste" })
