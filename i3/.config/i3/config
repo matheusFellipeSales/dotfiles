@@ -24,16 +24,23 @@ font pango:JetBrainsMono Nerd Font
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id picom
+exec --no-startup-id setxkbmap -layout us -variant intl
 
 # Polybar
 exec_always --no-startup-id killall polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 
+# Notifications
+exec_always --no-startup-id dunst
+
 # Monitor a 75hz
-exec_always --no-startup-id xrandr --output DisplayPort-0 --off --output HDMI-A-0 --mode 1920x1080 --rate 75.00 --pos 0x0 --rotate normal --output DVI-D-0 --off --output DVI-D-1 --off
+# exec_always --no-startup-id xrandr --output DisplayPort-0 --off --output HDMI-A-0 --mode 1920x1080 --rate 75.00 --pos 0x0 --rotate normal --output DVI-D-0 --off --output DVI-D-1 --off
+
+# Notebook + monitor
+exec_always --no-startup-id xrandr --output eDP --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-A-0 --primary --mode 1920x1080 --rate 75.00 --pos 1920x0 --rotate normal --output DisplayPort-0 --off --output DisplayPort-1 --off
 
 # Wallpapers
-exec --no-startup-id feh --bg-scale ~/.config/hypr/assets/stoic.png
+exec_always --no-startup-id feh --bg-scale ~/dotfiles/hypr/.config/hypr/assets/shinobu-catppuccin-mocha.png
 
 # Clipboard Screenshots
 bindsym Ctrl+p exec maim | xclip -selection clipboard -t image/png
@@ -44,7 +51,7 @@ bindsym Ctrl+Shift+p exec maim --select | xclip -selection clipboard -t image/pn
 gaps inner 2
 gaps outer 4
 
-# The combination of xss-lock, nm-applet and pactl is a popular choice, so
+# The combination of xss-loce, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
@@ -54,6 +61,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
+exec --no-startup-id blueman-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -72,7 +80,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+q kill
@@ -86,10 +94,10 @@ bindsym $mod+d exec --no-startup-id rofi -show drun
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -98,10 +106,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -109,9 +117,9 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# split in horizontal orientation
-bindsym $mod+h split h
-
+# # split in horizontal orientation
+# bindsym $mod+h split h
+#
 # split in vertical orientation
 bindsym $mod+v split v
 
@@ -137,6 +145,9 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
+set $monitor_left "eDP"
+set $monitor_right "HDMI-A-0"
+
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -147,6 +158,18 @@ set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
+
+#assign workspace to monitor
+workspace $ws1 output $monitor_right
+workspace $ws2 output $monitor_right
+workspace $ws3 output $monitor_right
+workspace $ws4 output $monitor_right
+workspace $ws5 output $monitor_right
+workspace $ws6 output $monitor_right
+workspace $ws7 output $monitor_right
+workspace $ws8 output $monitor_right
+workspace $ws9 output $monitor_right
+workspace $ws10 output $monitor_left
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
