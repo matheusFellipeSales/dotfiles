@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Nome da conexão VPN configurada no NetworkManager
-VPN_NAME="Hexanetworks"
+VPN_NAME="Hexa"
 
 # Verifica se a VPN está ativa
 VPN_STATUS=$(nmcli -t -f NAME,TYPE connection show --active | grep "^$VPN_NAME:vpn$")
