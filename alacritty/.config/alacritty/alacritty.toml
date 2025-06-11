@@ -10,7 +10,7 @@ program = "/bin/zsh"
 
 [window]
 dynamic_padding = false
-opacity = 0.9
+opacity = 0.96
 
 
 [window.dimensions]
