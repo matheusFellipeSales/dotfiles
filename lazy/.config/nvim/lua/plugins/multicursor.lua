@@ -62,6 +62,20 @@ return {
             mc.clearCursors()
           end
         end)
+        layerSet("n", "jj", function()
+          if not mc.cursorsEnabled() then
+            mc.enableCursors()
+          else
+            mc.clearCursors()
+          end
+        end)
+        layerSet("n", "jk", function()
+          if not mc.cursorsEnabled() then
+            mc.enableCursors()
+          else
+            mc.clearCursors()
+          end
+        end)
       end)
 
       -- Customize how cursors look.
