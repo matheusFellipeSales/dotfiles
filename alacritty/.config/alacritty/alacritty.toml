@@ -5,21 +5,20 @@ TERM = "xterm-256color"
 # Tmux start
 [terminal.shell]
 program = "/bin/zsh"
-# args = ["-l", "-c", "tmux"]
+args = ["-l", "-c", "tmux"]
 
 
 [window]
 dynamic_padding = false
-opacity = 0.96
-
+opacity = 0.98
 
 [window.dimensions]
 columns = 200
 lines = 40
 
 [window.padding]
-x = 10
-y = 10
+x = 2
+y = 6
 
 [font]
 size = 14
@@ -32,9 +31,6 @@ live_config_reload = true
 
 # Catppuccin theme
 import = ["~/.config/alacritty/catppuccin/catppuccin.toml"]
-
-# Dracula Theme
-#import = ["~/.config/alacritty/dracula/dracula.toml"]
 
 [terminal]
 
