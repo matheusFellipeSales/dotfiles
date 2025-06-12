@@ -1,6 +1,6 @@
 term = xterm-256color
 command=tmux attach || tmux
-font-family = "JetBrainsMono NF Medium"
+font-family = "JetBrainsMono Nerd Font"
 font-size = 14
 theme = catppuccin-mocha
 cursor-style = block
