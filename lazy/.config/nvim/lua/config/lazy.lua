@@ -30,6 +30,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.editor.neo-tree" },
     { import = "lazyvim.plugins.extras.linting.eslint" },
     { import = "lazyvim.plugins.extras.formatting.prettier" },
+    { import = "lazyvim.plugins.extras.test" },
 
     -- enable smear-cursor and disable cursor animate to nvim
     { import = "lazyvim.plugins.extras.ui.smear-cursor" },
