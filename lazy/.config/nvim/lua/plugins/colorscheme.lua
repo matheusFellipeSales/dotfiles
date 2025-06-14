@@ -10,6 +10,7 @@ return {
     opts = {
       flavor = "mocha",
       transparent_background = true,
+      no_bold = true,
       integrations = {
         aerial = true,
         alpha = true,
