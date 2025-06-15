@@ -76,13 +76,14 @@ function M.make_use_case(target_dir)
 		local use_case_content = string.format(
 			[[
 import { Injectable } from '@nestjs/common';
+import { UseCase } from '@src/core/entities/use-case';
 
 type Input = {};
 
 type Output = {};
 
 @Injectable()
-export class %s {
+export class %s implements UseCase<Input, Output> {
   async execute(input: Input): Promise<Output> {}
 }
 ]],
