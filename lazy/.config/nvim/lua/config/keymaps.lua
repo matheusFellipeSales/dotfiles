@@ -11,3 +11,12 @@ vim.keymap.set("n", "N", "Nzzzv", { desc = "Center previous search result" })
 -- better scape
 vim.keymap.set("i", "jj", "<Esc>", { noremap = false })
 vim.keymap.set("i", "jk", "<Esc>", { noremap = false })
+
+-- Paste without replacing
+vim.keymap.set("n", "<leader>p", '"_dP', { noremap = true, silent = true })
+vim.keymap.set("n", "x", '"_x', { noremap = true, silent = true })
+
+-- Delete all buffers
+vim.keymap.set("n", "<leader>ba", function()
+  Snacks.bufdelete.all()
+end, { desc = "Delete Other Buffers" })
