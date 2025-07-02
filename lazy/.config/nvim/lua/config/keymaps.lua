@@ -22,3 +22,6 @@ vim.keymap.set("n", "x", '"_x', opts)
 vim.keymap.set("n", "<leader>ba", function()
   Snacks.bufdelete.all()
 end, opts)
+
+vim.keymap.set("n", "<leader>yp", ":CopyAbsPath<CR>", { desc = "Copy absolute path" })
+vim.keymap.set("n", "<leader>yr", ":CopyRelPath<CR>", { desc = "Copy relative path" })

@@ -25,15 +25,10 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.prisma" },
     { import = "lazyvim.plugins.extras.lang.python" },
     { import = "lazyvim.plugins.extras.lang.tailwind" },
-    { import = "lazyvim.plugins.extras.lang.markdown" },
 
     { import = "lazyvim.plugins.extras.editor.neo-tree" },
     { import = "lazyvim.plugins.extras.linting.eslint" },
     { import = "lazyvim.plugins.extras.formatting.prettier" },
-    { import = "lazyvim.plugins.extras.test" },
-
-    -- enable smear-cursor and disable cursor animate to nvim
-    { import = "lazyvim.plugins.extras.ui.smear-cursor" },
 
     -- import/override with your plugins
     { import = "plugins" },
