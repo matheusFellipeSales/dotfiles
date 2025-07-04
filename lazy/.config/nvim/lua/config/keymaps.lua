@@ -25,3 +25,5 @@ end, opts)
 
 vim.keymap.set("n", "<leader>yp", ":CopyAbsPath<CR>", { desc = "Copy absolute path" })
 vim.keymap.set("n", "<leader>yr", ":CopyRelPath<CR>", { desc = "Copy relative path" })
+
+vim.keymap.set("n", "q", "<Nop>", { desc = "Disable macro recording" })
