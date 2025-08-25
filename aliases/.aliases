@@ -16,9 +16,6 @@ alias shut='shutdown -h now'                              # Desliga o pc.
 alias speedtest='speedtest -s 55720'                      # Speed test Araujosat server.
 alias neofetch='fastfetch'                                # Neofetch descontinuado.
 alias ls='eza --icons=always'                             # Icons on ls
-alias vim='nvim'                                          # Vim vira nvim sempre.
-alias nano='nvim'                                         # Nano vira nvim sempre.
-alias vi='nvim .'                                         # Vi vira nvim sempre.
 
 ############################################################################
 # ================================ YAY =================================== #
@@ -60,9 +57,3 @@ alias 'docker rmi all'='docker image rm $(docker images -q)'                    
 alias 'db:up'='docker compose -f ~/Documentos/Docker/banco/docker-compose.yml up -d'  # Liga o banco de dados.
 alias 'db:down'='docker compose -f ~/Documentos/Docker/banco/docker-compose.yml down' # Desliga o banco de dados.
 
-############################################################################
-# ========================= JELLYFIN DOCKER ============================== #
-############################################################################
-alias 'jelly-up'='docker compose -f /home/matheus/Documentos/jellyfin/docker-compose.yml up -d'
-alias 'jelly-down'='docker compose -f /home/matheus/Documentos/jellyfin/docker-compose.yml down'
-alias 'jelly-reload'='jelly-down && jelly-up'
