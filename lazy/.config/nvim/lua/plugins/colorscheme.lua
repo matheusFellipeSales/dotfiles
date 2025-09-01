@@ -2,9 +2,25 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin",
+      colorscheme = "tokyonight",
     },
   },
+
+  -- enable transparent on tokyonight
+  {
+    "folke/tokyonight.nvim",
+    lazy = true,
+    priority = 1000,
+    opts = {
+      transparent = true,
+      styles = {
+        sidebars = "transparent",
+        floats = "transparent",
+      },
+    },
+  },
+
+  -- enable transparent on catppuccin
   {
     "catppuccin/nvim",
     lazy = true,
@@ -22,17 +38,6 @@ return {
             return bufline.get_theme()
           end
         end,
-      },
-    },
-  },
-  {
-    "tokyonight.nvim",
-    lazy = true,
-    opts = {
-      transparent = true,
-      styles = {
-        sidebars = "transparent",
-        floats = "transparent",
       },
     },
   },
