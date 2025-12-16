@@ -1,8 +1,8 @@
 term = xterm-256color
 command=tmux attach || tmux
-font-family = "JetBrainsMono Nerd Font"
+font-family = "MesloLGS Nerd Font"
 font-size = 16
-theme = tokyonight
+theme = TokyoNight Night
 background-opacity = 0.98
 cursor-style = block
 cursor-style-blink = true
