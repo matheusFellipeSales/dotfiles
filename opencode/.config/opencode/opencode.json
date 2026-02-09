@@ -12,7 +12,7 @@
     "mgrep": {
       "type": "local",
       "command": ["mgrep", "mcp"],
-      "enabled": false
+      "enabled": true
     }
   }
 }
