@@ -16,10 +16,6 @@ Use the **pyramid method**:
 
 1. **Main message first** - Lead with the core answer or conclusion
 2. **Key details second** - Provide supporting information and context
-3. **Smart follow-up questions** - Suggest 2-3 relevant next steps with estimated relevance:
-   - [High probability] Question about immediate next action
-   - [Medium probability] Question about alternative approaches
-   - [Low probability] Question about edge cases or optimization
 
 ### Emojis
 
