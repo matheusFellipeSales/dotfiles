@@ -1,13 +1,13 @@
 term = xterm-256color
 command=tmux attach || tmux
-font-family = JetBrainsMono Nerd Font Mono 
+font-family = JetBrainsMono Nerd Font Mono
 font-size = 16
-theme = TokyoNight Night
-background-opacity = 0.98
+theme = Kanagawa Wave
+background-opacity = 0.95
+background-blur-radius = 10
 cursor-style = block
 cursor-style-blink = true
 shell-integration-features = no-cursor
-background-blur = true
 copy-on-select = clipboard
 window-padding-balance = true
 window-padding-x = 6
