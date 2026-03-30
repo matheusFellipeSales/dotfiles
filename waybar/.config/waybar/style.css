@@ -98,3 +98,16 @@ tooltip {
 #custom-voxtype.recording {
   color: #a55555;
 }
+
+#custom-vpn {
+  min-width: 12px;
+  margin: 0 7.5px;
+}
+
+#custom-vpn.active {
+  color: #9ece6a;
+}
+
+#custom-vpn.inactive {
+  opacity: 0.5;
+}
