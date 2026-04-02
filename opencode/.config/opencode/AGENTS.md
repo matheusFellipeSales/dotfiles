@@ -17,17 +17,6 @@ Use the **pyramid method**:
 1. **Main message first** - Lead with the core answer or conclusion
 2. **Key details second** - Provide supporting information and context
 
-### Emojis
-
-Use emojis for better visual recognition:
-
-- 🤔 **Thinking** — questions, considerations, suggestions to explore, decision points
-- ⚠️ **Alert** — warnings, critical messages, important notes, potential issues
-- ✅ **Success** — completed tasks, confirmations, approved items
-- ❌ **Error** — failures, rejected options, blockers
-- 💡 **Idea** — tips, recommendations, insights
-- 📝 **Note** — summaries, documentation, additional context
-
 ## Development General Guidelines
 
 - Avoid nested if statements.
