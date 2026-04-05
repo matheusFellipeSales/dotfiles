@@ -38,7 +38,6 @@ PACKAGES=(
   gst-plugins-good
   gst-plugins-bad
   gst-plugins-ugly
-  gstreamer-vaapi
   x265
   x264
   lame
@@ -57,7 +56,7 @@ PACKAGES=(
   ttf-freefont
   ttf-inconsolata
   ttf-liberation
-  libertinus-font
+  otf-libertinus
 )
 
 # =============================================================================
@@ -73,19 +72,9 @@ skipped() { echo -e "${YELLOW}    --: $*${RESET}"; }
 
 info "Verificando pacotes..."
 
-# Grupos de pacotes que não podem ser verificados com pacman -Q
-PACKAGE_GROUPS=(base-devel)
-
 to_install=()
 for pkg in "${PACKAGES[@]}"; do
-  # Verifica se é um grupo
-  if printf '%s\n' "${PACKAGE_GROUPS[@]}" | grep -qx "$pkg"; then
-    if pacman -Qg "$pkg" &>/dev/null; then
-      skipped "$pkg (grupo) já instalado"
-    else
-      to_install+=("$pkg")
-    fi
-  elif pacman -Q "$pkg" &>/dev/null; then
+  if pacman -Q "$pkg" &>/dev/null; then
     skipped "$pkg já instalado"
   else
     to_install+=("$pkg")
