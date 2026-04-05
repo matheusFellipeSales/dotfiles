@@ -27,6 +27,7 @@ PACKAGES=(
   fuse2
   libreoffice-fresh
   libreoffice-fresh-pt-br
+  google-chrome
 
   # --- Dev ---
   visual-studio-code-bin
