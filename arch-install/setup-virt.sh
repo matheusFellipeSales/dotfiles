@@ -41,6 +41,7 @@ info "Verificando $NETWORK_CONF..."
 if grep -qF "$FIREWALL_ENTRY" "$NETWORK_CONF" 2>/dev/null; then
   skipped "firewall_backend já configurado"
 else
+  sudo mkdir -p "$(dirname "$NETWORK_CONF")"
   echo "$FIREWALL_ENTRY" | sudo tee -a "$NETWORK_CONF" > /dev/null
   ok "firewall_backend adicionado"
 fi

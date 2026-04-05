@@ -26,9 +26,11 @@ gset() {
   local current
   current="$(gsettings get "$schema" "$key" 2>/dev/null || echo "")"
   if [[ "$current" == "$value" ]]; then
+    skipped "$key"
     return 0
   fi
   gsettings set "$schema" "$key" "$value"
+  ok "$key = $value"
 }
 
 info "Aplicando atalhos do GNOME..."

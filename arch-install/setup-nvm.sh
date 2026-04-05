@@ -41,9 +41,13 @@ fi
 # --- 3. Instalar Node LTS via nvm --------------------------------------------
 info "Verificando Node instalado via nvm..."
 export NVM_DIR="$HOME/.nvm"
-source /usr/share/nvm/init-nvm.sh
 
-if nvm which node &>/dev/null; then
+# nvm init não é compatível com set -euo pipefail, desabilita temporariamente
+set +euo pipefail
+source /usr/share/nvm/init-nvm.sh
+set -euo pipefail
+
+if nvm which node &>/dev/null 2>&1; then
   skipped "node já instalado ($(node --version))"
 else
   nvm install node
