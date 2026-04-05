@@ -11,6 +11,7 @@ SETUP_SCRIPTS=(
   setup-sysctl.sh
   setup-chaotic-aur.sh
   setup-packages.sh
+  setup-zsh.sh
   setup-aliases.sh
   setup-ufw.sh
   setup-docker.sh
