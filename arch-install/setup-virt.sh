@@ -99,4 +99,21 @@ else
   ok "regra UFW adicionada"
 fi
 
+# --- 7. Btrfs: desativar CoW no diretório de imagens das VMs -----------------
+VM_DIR="/var/lib/libvirt/images"
+
+info "Verificando filesystem de $VM_DIR..."
+if [[ "$(stat -f -c '%T' "$VM_DIR" 2>/dev/null)" == "btrfs" ]]; then
+  info "Btrfs detectado — verificando CoW em $VM_DIR..."
+  if lsattr -d "$VM_DIR" 2>/dev/null | grep -q '^....C'; then
+    skipped "CoW já desativado em $VM_DIR"
+  else
+    sudo mkdir -p "$VM_DIR"
+    sudo chattr +C "$VM_DIR"
+    ok "CoW desativado em $VM_DIR"
+  fi
+else
+  skipped "filesystem não é btrfs, CoW não aplicável"
+fi
+
 ok "Setup de virtualização concluído."

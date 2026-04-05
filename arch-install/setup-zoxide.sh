@@ -6,7 +6,7 @@ set -euo pipefail
 # =============================================================================
 
 ZSHRC="$HOME/.zshrc"
-EVAL_LINE='eval "$(zoxide init zsh)"'
+EVAL_LINE='eval "$(zoxide init zsh --cmd cd)"'
 
 CYAN='\033[0;36m'
 GREEN='\033[0;32m'
