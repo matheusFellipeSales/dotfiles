@@ -24,38 +24,35 @@ skipped() { echo -e "${YELLOW}    --: $*${RESET}"; }
 
 info "Verificando configurações sysctl..."
 
-needs_write=false
-declare -A to_apply=()
+needs_apply=false
 
 for key in "${!SYSCTL_SETTINGS[@]}"; do
   desired="${SYSCTL_SETTINGS[$key]}"
   current="$(sysctl -n "$key" 2>/dev/null || echo "")"
 
   if [[ "$current" == "$desired" ]]; then
-    skipped "$key = $current (já configurado)"
-  else
-    echo -e "${CYAN}    ~: $key: $current -> $desired${RESET}"
-    to_apply[$key]="$desired"
-    needs_write=true
+    skipped "$key = $current"
+    continue
   fi
+
+  echo -e "${CYAN}    ~: $key: $current -> $desired${RESET}"
+
+  # Atualiza ou adiciona apenas esta linha no arquivo
+  sudo mkdir -p "$(dirname "$SYSCTL_FILE")"
+  if sudo grep -q "^${key}\s*=" "$SYSCTL_FILE" 2>/dev/null; then
+    sudo sed -i "s|^${key}\s*=.*|${key} = ${desired}|" "$SYSCTL_FILE"
+  else
+    echo "${key} = ${desired}" | sudo tee -a "$SYSCTL_FILE" > /dev/null
+  fi
+
+  needs_apply=true
 done
 
-if ! $needs_write; then
+if ! $needs_apply; then
   ok "Todas as configurações já estão aplicadas."
   return 0 2>/dev/null || exit 0
 fi
 
-# Escrever arquivo de configuração
-info "Escrevendo $SYSCTL_FILE..."
-{
-  echo "# Gerado por setup-sysctl.sh"
-  for key in "${!SYSCTL_SETTINGS[@]}"; do
-    echo "$key = ${SYSCTL_SETTINGS[$key]}"
-  done
-} | sudo tee "$SYSCTL_FILE" > /dev/null
-ok "$SYSCTL_FILE atualizado"
-
-# Aplicar sem reboot
 info "Aplicando com sysctl --system..."
 sudo sysctl --system --quiet
 ok "Configurações aplicadas."
