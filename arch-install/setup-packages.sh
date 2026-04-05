@@ -29,6 +29,7 @@ PACKAGES=(
   libreoffice-fresh-pt-br
   google-chrome
   winbox
+  wl-clipboard
 
   # --- Dev ---
   visual-studio-code-bin
