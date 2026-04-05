@@ -11,6 +11,7 @@ SETUP_SCRIPTS=(
   setup-sysctl.sh
   setup-chaotic-aur.sh
   setup-packages.sh
+  setup-aliases.sh
   setup-ufw.sh
   setup-docker.sh
   setup-nano.sh
@@ -18,6 +19,7 @@ SETUP_SCRIPTS=(
   setup-nvm.sh
   setup-l2tp.sh
   setup-virt.sh
+  setup-claude.sh
   setup-flatpaks.sh
   setup-gnome-keybinds.sh
 )
