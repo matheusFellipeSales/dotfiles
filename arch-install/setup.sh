@@ -17,10 +17,12 @@ SETUP_SCRIPTS=(
   setup-docker.sh
   setup-nano.sh
   setup-zoxide.sh
+  setup-fzf-history.sh
   setup-nvm.sh
   setup-l2tp.sh
   setup-virt.sh
   setup-claude.sh
+  setup-opencode.sh
   setup-flatpaks.sh
   setup-gnome-keybinds.sh
 )
