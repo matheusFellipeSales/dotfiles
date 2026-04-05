@@ -58,6 +58,7 @@ PACKAGES=(
   ttf-inconsolata
   ttf-liberation
   otf-libertinus
+  ttf-jetbrains-mono-nerd
 )
 
 # =============================================================================
