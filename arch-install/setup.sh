@@ -7,6 +7,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # SCRIPTS DE SETUP — adicione novos scripts aqui em ordem de execução
 # =============================================================================
 SETUP_SCRIPTS=(
+  setup-bluetooth.sh
   setup-power-profiles.sh
   setup-sysctl.sh
   setup-chaotic-aur.sh
