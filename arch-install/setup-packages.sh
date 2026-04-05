@@ -28,6 +28,7 @@ PACKAGES=(
   libreoffice-fresh
   libreoffice-fresh-pt-br
   google-chrome
+  winbox
 
   # --- Dev ---
   visual-studio-code-bin
