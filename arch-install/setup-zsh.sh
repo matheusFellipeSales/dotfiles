@@ -10,6 +10,7 @@ PACKAGES=(
   zsh-autosuggestions
   zsh-syntax-highlighting
   zsh-theme-powerlevel10k
+  vte-common
 )
 
 ZSHRC="$HOME/.zshrc"
@@ -60,6 +61,18 @@ if grep -qF 'powerlevel10k.zsh-theme' "$ZSHRC" 2>/dev/null; then
 else
   printf '\n%s\n' "$PLUGINS_BLOCK" >> "$ZSHRC"
   ok "plugins adicionados ao $ZSHRC"
+fi
+
+# --- 4. Abrir novas abas/janelas no mesmo diretório (VTE/OSC7) ----------------
+VTE_BLOCK='# Open new terminal tabs/windows in the same directory
+[[ -f /etc/profile.d/vte.sh ]] && source /etc/profile.d/vte.sh'
+
+info "Verificando integração VTE no $ZSHRC..."
+if grep -qF 'vte.sh' "$ZSHRC" 2>/dev/null; then
+  skipped "VTE já configurado em $ZSHRC"
+else
+  printf '\n%s\n' "$VTE_BLOCK" >> "$ZSHRC"
+  ok "VTE adicionado ao $ZSHRC"
 fi
 
 ok "Setup do zsh concluído."
