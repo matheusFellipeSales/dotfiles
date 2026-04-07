@@ -27,6 +27,7 @@ SETUP_SCRIPTS=(
   setup-opencode.sh
   setup-flatpaks.sh
   setup-gnome-keybinds.sh
+  setup-topgrade.sh
 )
 # =============================================================================
 
