@@ -10,7 +10,8 @@ FLATPAKS=(
   md.obsidian.Obsidian
   io.github.alainm23.planify
   io.missioncenter.MissionCenter
-  be.alexandervanhee.gradia
+  io.github.giantpinkrobots.flatsweep
+  it.mijorus.gearlever
 )
 # =============================================================================
 

@@ -20,6 +20,7 @@ SETUP_SCRIPTS=(
   setup-zoxide.sh
   setup-fzf-history.sh
   setup-nvm.sh
+  setup-codex.sh
   setup-l2tp.sh
   setup-virt.sh
   setup-claude.sh
