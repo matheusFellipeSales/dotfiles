@@ -90,6 +90,18 @@ tooltip {
   color: #a55555;
 }
 
+#custom-mic {
+  margin-right: 17px;
+}
+
+#custom-mic.muted {
+  opacity: 0.5;
+}
+
+#custom-mic.open {
+  color: #a55555;
+}
+
 #custom-vpn {
   margin-right: 17px;
 }

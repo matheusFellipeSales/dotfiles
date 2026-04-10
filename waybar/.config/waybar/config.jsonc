@@ -8,6 +8,7 @@
   "modules-center": ["clock", "custom/update", "custom/voxtype", "custom/screenrecording-indicator", "custom/idle-indicator", "custom/notification-silencing-indicator"],
   "modules-right": [
     "group/tray-expander",
+    "custom/mic",
     "custom/vpn",
     "bluetooth",
     "network",
@@ -55,6 +56,15 @@
     "interval": 21600
   },
 
+  "custom/mic": {
+    "exec": "~/.config/waybar/mic-status.sh",
+    "return-type": "json",
+    "signal": 11,
+    "interval": "once",
+    "on-click": "~/.config/waybar/mic-toggle.sh",
+    "on-scroll-up": "~/.config/waybar/mic-volume.sh -i 5",
+    "on-scroll-down": "~/.config/waybar/mic-volume.sh -d 5"
+  },
   "custom/vpn": {
     "exec": "~/.config/waybar/vpn-status.sh",
     "return-type": "json",
@@ -84,7 +94,7 @@
     "tooltip-format-disconnected": "Disconnected",
     "interval": 3,
     "spacing": 1,
-    "on-click": "omarchy-launch-wifi"
+    "on-click": "nm-applet --indicator"
   },
   "battery": {
     "format": "{capacity}% {icon}",
