@@ -90,6 +90,18 @@ tooltip {
   color: #a55555;
 }
 
+#custom-vpn {
+  margin-right: 17px;
+}
+
+#custom-vpn.disconnected {
+  opacity: 0.5;
+}
+
+#custom-vpn.missing {
+  color: #a55555;
+}
+
 #custom-voxtype {
   min-width: 12px;
   margin: 0 0 0 7.5px;
