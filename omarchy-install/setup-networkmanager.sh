@@ -10,6 +10,8 @@ PACKAGES=(
   wpa_supplicant
   network-manager-applet
   nm-connection-editor
+  networkmanager-l2tp
+  strongswan
 )
 
 # Serviços que devem ser desabilitados (conflitam com NetworkManager)
