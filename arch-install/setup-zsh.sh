@@ -63,7 +63,16 @@ else
   ok "plugins adicionados ao $ZSHRC"
 fi
 
-# --- 4. Abrir novas abas/janelas no mesmo diretório (VTE/OSC7) ----------------
+# --- 4. Habilitar sistema de completion (compinit) ----------------------------
+info "Verificando compinit no $ZSHRC..."
+if grep -qF 'compinit' "$ZSHRC" 2>/dev/null; then
+  skipped "compinit já configurado em $ZSHRC"
+else
+  printf '\nautoload -Uz compinit && compinit\n' >> "$ZSHRC"
+  ok "compinit adicionado ao $ZSHRC"
+fi
+
+# --- 5. Abrir novas abas/janelas no mesmo diretório (VTE/OSC7) ----------------
 VTE_BLOCK='# Open new terminal tabs/windows in the same directory
 [[ -f /etc/profile.d/vte.sh ]] && source /etc/profile.d/vte.sh'
 
