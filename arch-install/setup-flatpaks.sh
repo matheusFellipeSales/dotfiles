@@ -7,9 +7,6 @@ set -euo pipefail
 FLATPAKS=(
   com.discordapp.Discord
   com.obsproject.Studio
-  md.obsidian.Obsidian
-  io.github.alainm23.planify
-  io.missioncenter.MissionCenter
   io.github.giantpinkrobots.flatsweep
   it.mijorus.gearlever
 )
