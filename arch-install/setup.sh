@@ -13,12 +13,10 @@ SETUP_SCRIPTS=(
   setup-chaotic-aur.sh
   setup-packages.sh
   setup-zsh.sh
-  setup-aliases.sh
   setup-ufw.sh
   setup-docker.sh
   setup-nano.sh
   setup-zoxide.sh
-  setup-fzf-history.sh
   setup-nvm.sh
   setup-codex.sh
   setup-l2tp.sh
@@ -44,6 +42,13 @@ for script in "${SETUP_SCRIPTS[@]}"; do
 
   if [[ ! -f "$path" ]]; then
     echo -e "${RED}ERRO: $path não encontrado — pulando${RESET}"
+    continue
+  fi
+
+  read -r -p "$(echo -e "${CYAN}Executar $script? [s/N] ${RESET}")" answer
+  if [[ "${answer,,}" != "s" ]]; then
+    echo -e "${YELLOW}    --: $script pulado${RESET}"
+    echo ""
     continue
   fi
 

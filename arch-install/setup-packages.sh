@@ -27,8 +27,6 @@ PACKAGES=(
   fuse2
   libreoffice-fresh
   libreoffice-fresh-pt-br
-  google-chrome
-  winbox
   wl-clipboard
 
   # --- Dev ---

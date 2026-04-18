@@ -11,6 +11,7 @@ DAEMON_CONFIG='{
   "ipv6": true,
   "fixed-cidr-v6": "2001:db8:1::/64"
 }'
+DOCKER_DATA_DIR="/var/lib/docker"
 
 CYAN='\033[0;36m'
 GREEN='\033[0;32m'
@@ -37,7 +38,42 @@ if [[ ${#to_install[@]} -gt 0 ]]; then
   ok "pacotes instalados"
 fi
 
-# --- 2. Serviço docker --------------------------------------------------------
+# --- 2. Btrfs: subvolume + desativar CoW --------------------------------------
+info "Verificando sistema de arquivos em /..."
+ROOT_FS="$(findmnt -n -o FSTYPE /)"
+
+if [[ "$ROOT_FS" == "btrfs" ]]; then
+  info "Sistema btrfs detectado."
+
+  info "Verificando subvolume $DOCKER_DATA_DIR..."
+  if btrfs subvolume show "$DOCKER_DATA_DIR" &>/dev/null; then
+    skipped "subvolume $DOCKER_DATA_DIR já existe"
+  else
+    sudo systemctl stop docker 2>/dev/null || true
+    sudo mkdir -p "$(dirname "$DOCKER_DATA_DIR")"
+    if [[ -d "$DOCKER_DATA_DIR" ]]; then
+      sudo mv "$DOCKER_DATA_DIR" "${DOCKER_DATA_DIR}.bak"
+    fi
+    sudo btrfs subvolume create "$DOCKER_DATA_DIR"
+    if [[ -d "${DOCKER_DATA_DIR}.bak" ]]; then
+      sudo mv "${DOCKER_DATA_DIR}.bak"/* "$DOCKER_DATA_DIR"/ 2>/dev/null || true
+      sudo rm -rf "${DOCKER_DATA_DIR}.bak"
+    fi
+    ok "subvolume $DOCKER_DATA_DIR criado"
+  fi
+
+  info "Verificando CoW em $DOCKER_DATA_DIR..."
+  if lsattr -d "$DOCKER_DATA_DIR" 2>/dev/null | grep -q 'C'; then
+    skipped "CoW já desativado em $DOCKER_DATA_DIR"
+  else
+    sudo chattr +C "$DOCKER_DATA_DIR"
+    ok "CoW desativado em $DOCKER_DATA_DIR"
+  fi
+else
+  skipped "sistema de arquivos é '$ROOT_FS', sem configuração btrfs necessária"
+fi
+
+# --- 3. Serviço docker --------------------------------------------------------
 info "Verificando serviço docker..."
 if systemctl is-enabled --quiet docker && systemctl is-active --quiet docker; then
   skipped "docker já habilitado e ativo"
@@ -46,7 +82,7 @@ else
   ok "docker habilitado e iniciado"
 fi
 
-# --- 3. Usuário no grupo docker -----------------------------------------------
+# --- 4. Usuário no grupo docker -----------------------------------------------
 info "Verificando grupo docker para $USER..."
 if id -nG "$USER" | grep -qw docker; then
   skipped "$USER já está no grupo docker"
@@ -55,7 +91,7 @@ else
   ok "$USER adicionado ao grupo docker (efetivo no próximo login)"
 fi
 
-# --- 4. daemon.json (IPv6) ----------------------------------------------------
+# --- 5. daemon.json (IPv6) ----------------------------------------------------
 info "Verificando $DAEMON_JSON..."
 needs_daemon_update=false
 
@@ -78,7 +114,7 @@ if $needs_daemon_update; then
   ok "$DAEMON_JSON configurado"
 fi
 
-# --- 5. Reiniciar docker se houve mudança na config --------------------------
+# --- 6. Reiniciar docker se houve mudança na config ---------------------------
 if $needs_daemon_update; then
   info "Reiniciando docker..."
   sudo systemctl restart docker

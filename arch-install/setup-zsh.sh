@@ -2,8 +2,11 @@
 set -euo pipefail
 
 # =============================================================================
-# CONFIGURAÇÃO DO ZSH + PLUGINS + POWERLEVEL10K
+# CONFIGURAÇÃO DO ZSH + PLUGINS + POWERLEVEL10K + FZF + ALIASES
 # =============================================================================
+
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ZSHRC="$HOME/.zshrc"
 
 PACKAGES=(
   zsh
@@ -11,14 +14,30 @@ PACKAGES=(
   zsh-syntax-highlighting
   zsh-theme-powerlevel10k
   vte-common
+  fzf
+  stow
 )
-
-ZSHRC="$HOME/.zshrc"
 
 PLUGINS_BLOCK='# Zsh Plugins
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme'
+
+VTE_BLOCK='# Open new terminal tabs/windows in the same directory
+[[ -f /etc/profile.d/vte.sh ]] && source /etc/profile.d/vte.sh'
+
+FZF_BLOCK='# Set up fzf key bindings
+source <(fzf --zsh)
+
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory'
+
+HG_ALIAS='alias hg='"'"'print -z $(fc -l 1 | fzf --tac --no-sort | sed "s/ *[0-9]* *//")'"'"''
+
+ALIASES_LINE='# Aliases
+[[ ! -f ~/.aliases ]] || source ~/.aliases'
 
 CYAN='\033[0;36m'
 GREEN='\033[0;32m'
@@ -30,7 +49,7 @@ ok()      { echo -e "${GREEN}    ok: $*${RESET}"; }
 skipped() { echo -e "${YELLOW}    --: $*${RESET}"; }
 
 # --- 1. Pacotes ---------------------------------------------------------------
-info "Verificando pacotes zsh..."
+info "Verificando pacotes..."
 to_install=()
 for pkg in "${PACKAGES[@]}"; do
   if pacman -Q "$pkg" &>/dev/null; then
@@ -54,7 +73,7 @@ else
   ok "zsh definido como shell padrão (efetivo no próximo login)"
 fi
 
-# --- 3. Source dos plugins no .zshrc -----------------------------------------
+# --- 3. Plugins no .zshrc -----------------------------------------------------
 info "Verificando plugins no $ZSHRC..."
 if grep -qF 'powerlevel10k.zsh-theme' "$ZSHRC" 2>/dev/null; then
   skipped "plugins já configurados em $ZSHRC"
@@ -63,7 +82,7 @@ else
   ok "plugins adicionados ao $ZSHRC"
 fi
 
-# --- 4. Habilitar sistema de completion (compinit) ----------------------------
+# --- 4. compinit ---------------------------------------------------------------
 info "Verificando compinit no $ZSHRC..."
 if grep -qF 'compinit' "$ZSHRC" 2>/dev/null; then
   skipped "compinit já configurado em $ZSHRC"
@@ -72,16 +91,49 @@ else
   ok "compinit adicionado ao $ZSHRC"
 fi
 
-# --- 5. Abrir novas abas/janelas no mesmo diretório (VTE/OSC7) ----------------
-VTE_BLOCK='# Open new terminal tabs/windows in the same directory
-[[ -f /etc/profile.d/vte.sh ]] && source /etc/profile.d/vte.sh'
-
+# --- 5. VTE -------------------------------------------------------------------
 info "Verificando integração VTE no $ZSHRC..."
 if grep -qF 'vte.sh' "$ZSHRC" 2>/dev/null; then
   skipped "VTE já configurado em $ZSHRC"
 else
   printf '\n%s\n' "$VTE_BLOCK" >> "$ZSHRC"
   ok "VTE adicionado ao $ZSHRC"
+fi
+
+# --- 6. fzf + history ---------------------------------------------------------
+info "Verificando configuração fzf+history em $ZSHRC..."
+if grep -qF 'source <(fzf --zsh)' "$ZSHRC" 2>/dev/null; then
+  skipped "fzf key bindings já presentes em $ZSHRC"
+else
+  printf '\n%s\n' "$FZF_BLOCK" >> "$ZSHRC"
+  ok "fzf key bindings adicionados ao $ZSHRC"
+fi
+
+# --- 7. Alias hg --------------------------------------------------------------
+info "Verificando alias hg em $ZSHRC..."
+if grep -qF 'alias hg=' "$ZSHRC" 2>/dev/null; then
+  skipped "alias hg já presente em $ZSHRC"
+else
+  printf '\n%s\n' "$HG_ALIAS" >> "$ZSHRC"
+  ok "alias hg adicionado ao $ZSHRC"
+fi
+
+# --- 8. Stow aliases ----------------------------------------------------------
+info "Verificando symlink de aliases..."
+if [[ -L "$HOME/.aliases" && "$(readlink "$HOME/.aliases")" == *dotfiles/aliases/.aliases* ]]; then
+  skipped ".aliases já linkado"
+else
+  stow --dir="$DOTFILES_DIR" --target="$HOME" aliases
+  ok ".aliases linkado via stow"
+fi
+
+# --- 9. Source de aliases no .zshrc -------------------------------------------
+info "Verificando source de aliases em $ZSHRC..."
+if grep -qF 'source ~/.aliases' "$ZSHRC" 2>/dev/null; then
+  skipped "source já presente em $ZSHRC"
+else
+  printf '\n%s\n' "$ALIASES_LINE" >> "$ZSHRC"
+  ok "source adicionado em $ZSHRC"
 fi
 
 ok "Setup do zsh concluído."
