@@ -22,23 +22,7 @@ info()    { echo -e "${CYAN}==> $*${RESET}"; }
 ok()      { echo -e "${GREEN}    ok: $*${RESET}"; }
 skipped() { echo -e "${YELLOW}    --: $*${RESET}"; }
 
-# --- 1. Pacotes ---------------------------------------------------------------
-info "Verificando pacotes docker..."
-to_install=()
-for pkg in "${PACKAGES[@]}"; do
-  if pacman -Q "$pkg" &>/dev/null; then
-    skipped "$pkg já instalado"
-  else
-    to_install+=("$pkg")
-  fi
-done
-
-if [[ ${#to_install[@]} -gt 0 ]]; then
-  sudo pacman -S --noconfirm "${to_install[@]}"
-  ok "pacotes instalados"
-fi
-
-# --- 2. Btrfs: subvolume + desativar CoW --------------------------------------
+# --- 1. Btrfs: subvolume + desativar CoW (antes da instalação) ---------------
 info "Verificando sistema de arquivos em /..."
 ROOT_FS="$(findmnt -n -o FSTYPE /)"
 
@@ -46,7 +30,7 @@ if [[ "$ROOT_FS" == "btrfs" ]]; then
   info "Sistema btrfs detectado."
 
   info "Verificando subvolume $DOCKER_DATA_DIR..."
-  if btrfs subvolume show "$DOCKER_DATA_DIR" &>/dev/null; then
+  if sudo btrfs subvolume show "$DOCKER_DATA_DIR" &>/dev/null; then
     skipped "subvolume $DOCKER_DATA_DIR já existe"
   else
     sudo systemctl stop docker 2>/dev/null || true
@@ -71,6 +55,22 @@ if [[ "$ROOT_FS" == "btrfs" ]]; then
   fi
 else
   skipped "sistema de arquivos é '$ROOT_FS', sem configuração btrfs necessária"
+fi
+
+# --- 2. Pacotes ---------------------------------------------------------------
+info "Verificando pacotes docker..."
+to_install=()
+for pkg in "${PACKAGES[@]}"; do
+  if pacman -Q "$pkg" &>/dev/null; then
+    skipped "$pkg já instalado"
+  else
+    to_install+=("$pkg")
+  fi
+done
+
+if [[ ${#to_install[@]} -gt 0 ]]; then
+  sudo pacman -S --noconfirm "${to_install[@]}"
+  ok "pacotes instalados"
 fi
 
 # --- 3. Serviço docker --------------------------------------------------------

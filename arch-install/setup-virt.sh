@@ -14,9 +14,45 @@ info()    { echo -e "${CYAN}==> $*${RESET}"; }
 ok()      { echo -e "${GREEN}    ok: $*${RESET}"; }
 skipped() { echo -e "${YELLOW}    --: $*${RESET}"; }
 
-# --- 1. Pacotes ---------------------------------------------------------------
 PACKAGES=(qemu-full virt-manager swtpm)
+VM_DIR="/var/lib/libvirt"
 
+# --- 1. Btrfs: subvolume + desativar CoW (antes da instalação) ---------------
+info "Verificando sistema de arquivos em /..."
+ROOT_FS="$(findmnt -n -o FSTYPE /)"
+
+if [[ "$ROOT_FS" == "btrfs" ]]; then
+  info "Sistema btrfs detectado."
+
+  info "Verificando subvolume $VM_DIR..."
+  if sudo btrfs subvolume show "$VM_DIR" &>/dev/null; then
+    skipped "subvolume $VM_DIR já existe"
+  else
+    sudo systemctl stop libvirtd 2>/dev/null || true
+    sudo mkdir -p "$(dirname "$VM_DIR")"
+    if [[ -d "$VM_DIR" ]]; then
+      sudo mv "$VM_DIR" "${VM_DIR}.bak"
+    fi
+    sudo btrfs subvolume create "$VM_DIR"
+    if [[ -d "${VM_DIR}.bak" ]]; then
+      sudo mv "${VM_DIR}.bak"/* "$VM_DIR"/ 2>/dev/null || true
+      sudo rm -rf "${VM_DIR}.bak"
+    fi
+    ok "subvolume $VM_DIR criado"
+  fi
+
+  info "Verificando CoW em $VM_DIR..."
+  if lsattr -d "$VM_DIR" 2>/dev/null | grep -q 'C'; then
+    skipped "CoW já desativado em $VM_DIR"
+  else
+    sudo chattr +C "$VM_DIR"
+    ok "CoW desativado em $VM_DIR"
+  fi
+else
+  skipped "sistema de arquivos é '$ROOT_FS', sem configuração btrfs necessária"
+fi
+
+# --- 2. Pacotes ---------------------------------------------------------------
 info "Verificando pacotes..."
 to_install=()
 for pkg in "${PACKAGES[@]}"; do
@@ -97,23 +133,6 @@ if sudo ufw status verbose 2>/dev/null | grep -q "192.168.122.0/24"; then
 else
   sudo ufw route allow from 192.168.122.0/24
   ok "regra UFW adicionada"
-fi
-
-# --- 7. Btrfs: desativar CoW no diretório de imagens das VMs -----------------
-VM_DIR="/var/lib/libvirt/images"
-
-info "Verificando filesystem de $VM_DIR..."
-if [[ "$(stat -f -c '%T' "$VM_DIR" 2>/dev/null)" == "btrfs" ]]; then
-  info "Btrfs detectado — verificando CoW em $VM_DIR..."
-  if lsattr -d "$VM_DIR" 2>/dev/null | grep -q '^....C'; then
-    skipped "CoW já desativado em $VM_DIR"
-  else
-    sudo mkdir -p "$VM_DIR"
-    sudo chattr +C "$VM_DIR"
-    ok "CoW desativado em $VM_DIR"
-  fi
-else
-  skipped "filesystem não é btrfs, CoW não aplicável"
 fi
 
 ok "Setup de virtualização concluído."
