@@ -14,6 +14,7 @@ SETUP_SCRIPTS=(
   setup-packages.sh
   setup-zsh.sh
   setup-ufw.sh
+  setup-dns.sh
   setup-docker.sh
   setup-nano.sh
   setup-zoxide.sh
