@@ -9,6 +9,7 @@ FLATPAKS=(
   com.obsproject.Studio
   io.github.giantpinkrobots.flatsweep
   it.mijorus.gearlever
+  be.alexandervanhee.gradia
 )
 # =============================================================================
 
