@@ -10,6 +10,7 @@ SETUP_SCRIPTS=(
   setup-bluetooth.sh
   setup-power-profiles.sh
   setup-sysctl.sh
+  setup-cachyos.sh
   setup-chaotic-aur.sh
   setup-packages.sh
   setup-zsh.sh
