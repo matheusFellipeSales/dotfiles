@@ -30,7 +30,6 @@ PACKAGES=(
   wl-clipboard
 
   # --- Dev ---
-  visual-studio-code-bin
   git
 
   # --- Codecs ---

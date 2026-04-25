@@ -34,6 +34,7 @@ SETUP_SCRIPTS=(
 GREEN='\033[0;32m'
 CYAN='\033[0;36m'
 RED='\033[0;31m'
+YELLOW='\033[1;33m'
 RESET='\033[0m'
 
 for script in "${SETUP_SCRIPTS[@]}"; do

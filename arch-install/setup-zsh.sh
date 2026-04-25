@@ -39,6 +39,13 @@ HG_ALIAS='alias hg='"'"'print -z $(fc -l 1 | fzf --tac --no-sort | sed "s/ *[0-9
 ALIASES_LINE='# Aliases
 [[ ! -f ~/.aliases ]] || source ~/.aliases'
 
+KEYBINDINGS_BLOCK='# Ctrl+Left / Ctrl+Right -> jump words
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;3D" backward-word
+bindkey "^[[1;3C" forward-word
+bindkey "^H"      backward-kill-word'
+
 CYAN='\033[0;36m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -134,6 +141,15 @@ if grep -qF 'source ~/.aliases' "$ZSHRC" 2>/dev/null; then
 else
   printf '\n%s\n' "$ALIASES_LINE" >> "$ZSHRC"
   ok "source adicionado em $ZSHRC"
+fi
+
+# --- 10. Keybindings (Ctrl+Left/Right pula palavra) ---------------------------
+info "Verificando keybindings em $ZSHRC..."
+if grep -qF '"^[[1;5D" backward-word' "$ZSHRC" 2>/dev/null; then
+  skipped "keybindings já presentes em $ZSHRC"
+else
+  printf '\n%s\n' "$KEYBINDINGS_BLOCK" >> "$ZSHRC"
+  ok "keybindings adicionados ao $ZSHRC"
 fi
 
 ok "Setup do zsh concluído."

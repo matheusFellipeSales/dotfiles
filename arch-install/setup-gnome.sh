@@ -153,13 +153,57 @@ command -v gnome-weather &>/dev/null && system_weather=1
 flatpak list 2>/dev/null | grep -q "org.gnome.Weather" && flatpak_weather=1
 
 if [[ $system_weather -eq 0 && $flatpak_weather -eq 0 ]]; then
-  skipped "GNOME Weather não instalado — pulando localização"
-  _finish 0
+  read -rp "$(echo -e "${CYAN}GNOME Weather não instalado. Instalar? [pacman/flatpak/N] ${RESET}")" install_choice
+  case "${install_choice,,}" in
+    pacman|p)
+      sudo pacman -S --noconfirm gnome-weather
+      ok "gnome-weather instalado via pacman"
+      system_weather=1
+      ;;
+    flatpak|f)
+      if ! command -v flatpak &>/dev/null; then
+        echo -e "${YELLOW}flatpak não disponível${RESET}"
+        _finish 0
+      fi
+      flatpak install -y flathub org.gnome.Weather
+      ok "GNOME Weather instalado via flatpak"
+      flatpak_weather=1
+      ;;
+    *)
+      skipped "GNOME Weather pulado"
+      _finish 0
+      ;;
+  esac
 fi
 
 read -rp "$(echo -e "${CYAN}Adicionar localização ao GNOME Weather? [s/N] ${RESET}")" answer
 if [[ "${answer,,}" != "s" ]]; then
   skipped "GNOME Weather pulado"
+  _finish 0
+fi
+
+# --- Perguntar localização ----------------------------------------------------
+read -rp "Digite o nome da localização (vazio para cancelar): " location_name
+if [[ -z "$location_name" ]]; then
+  skipped "Localização vazia — cancelado"
+  _finish 0
+fi
+
+info "Buscando '$location_name'..."
+query="$(echo "$location_name" | sed 's/ /+/g')"
+request=$(curl -s "https://nominatim.openstreetmap.org/search?q=$query&format=json&limit=1")
+
+if [[ "$request" == "[]" || -z "$request" ]]; then
+  echo -e "${YELLOW}Nenhuma localização encontrada para '$location_name'${RESET}"
+  _finish 0
+fi
+
+display=$(echo "$request" | sed 's/.*"display_name":"//' | sed 's/".*//')
+name=$(echo "$display" | sed 's/,.*//')
+
+read -rp "$(echo -e "${CYAN}Adicionar '$display'? [s/N] ${RESET}")" answer
+if [[ "${answer,,}" != "s" ]]; then
+  skipped "Operação cancelada"
   _finish 0
 fi
 
@@ -171,26 +215,6 @@ if ! command -v bc &>/dev/null; then
   ok "bc instalado"
 else
   skipped "bc já instalado"
-fi
-
-# --- Perguntar localização ----------------------------------------------------
-read -rp "Digite o nome da localização: " location_name
-
-query="$(echo "$location_name" | sed 's/ /+/g')"
-request=$(curl -s "https://nominatim.openstreetmap.org/search?q=$query&format=json&limit=1")
-
-if [[ "$request" == "[]" || -z "$request" ]]; then
-  echo -e "${YELLOW}Nenhuma localização encontrada para '$location_name'${RESET}"
-  _finish 1
-fi
-
-display=$(echo "$request" | sed 's/.*"display_name":"//' | sed 's/".*//')
-name=$(echo "$display" | sed 's/,.*//')
-
-read -rp "Adicionar '$display'? [y/n] " answer
-if [[ "$answer" != "y" ]]; then
-  skipped "Operação cancelada"
-  _finish 0
 fi
 
 # --- Calcular coordenadas e adicionar -----------------------------------------

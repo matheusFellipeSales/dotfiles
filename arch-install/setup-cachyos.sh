@@ -45,3 +45,14 @@ else
   sudo udevadm trigger
   ok "Regras udev aplicadas"
 fi
+
+info "Desabilitando arch-update tray/timer (global)..."
+for unit in arch-update-tray.service arch-update.timer; do
+  state="$(systemctl --global is-enabled "$unit" 2>/dev/null || echo "disabled")"
+  if [[ "$state" == "disabled" || "$state" == "not-found" || "$state" == "masked" ]]; then
+    skipped "$unit já está $state"
+  else
+    sudo systemctl --global disable "$unit"
+    ok "$unit desabilitado"
+  fi
+done
