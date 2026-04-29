@@ -63,6 +63,7 @@ alias 'db:down'='docker compose -f ~/Documentos/Docker/banco/docker-compose.yml 
 # ============================= CLAUDE  ================================== #
 ############################################################################
 export CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY=1
+export CLAUDE_NO_TIPS=1
 alias claude='claude --dangerously-skip-permissions'
 
 ############################################################################

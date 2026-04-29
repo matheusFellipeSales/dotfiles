@@ -24,15 +24,7 @@ return {
     lazy = false,
     priority = 1000,
     opts = {
-      transparent = true, -- Ativa a transparência base
-      overrides = function(_)
-        return {
-          -- Força a transparência na Neo-tree
-          NeoTreeNormal = { bg = "none" },
-          NeoTreeNormalNC = { bg = "none" },
-          NeoTreeWinSeparator = { bg = "none" },
-        }
-      end,
+      transparent = true,
     },
   },
 }
