@@ -17,4 +17,4 @@ confirm-close-surface = false
 window-width=130
 window-height=34
 mouse-scroll-multiplier = 0.25
-keybind = ctrl+enter=text:\\\r
+keybind = shift+enter=text:\\\r

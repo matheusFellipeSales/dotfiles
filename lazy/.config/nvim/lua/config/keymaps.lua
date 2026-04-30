@@ -13,6 +13,11 @@ vim.keymap.set("n", "N", "Nzzzv", opts)
 -- better scape
 vim.keymap.set("i", "jj", "<Esc>", opts)
 vim.keymap.set("i", "jk", "<Esc>", opts)
+vim.keymap.set("i", "JJ", "<Esc>", opts)
+vim.keymap.set("i", "JK", "<Esc>", opts)
+vim.keymap.set("i", "Jj", "<Esc>", opts)
+vim.keymap.set("i", "Jk", "<Esc>", opts)
+vim.keymap.set("i", "jK", "<Esc>", opts)
 
 -- Paste without replacing
 vim.keymap.set("v", "p", '"_dP', opts)
