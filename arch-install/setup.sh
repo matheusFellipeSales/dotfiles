@@ -27,7 +27,6 @@ SETUP_SCRIPTS=(
   setup-opencode.sh
   setup-flatpaks.sh
   setup-gnome.sh
-  setup-topgrade.sh
 )
 # =============================================================================
 
