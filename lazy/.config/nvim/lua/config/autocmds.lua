@@ -7,7 +7,7 @@
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
-vim.api.nvim_create_autocmd("ColorScheme", {
+vim.api.nvim_create_autocmd({ "ColorScheme", "VimEnter", "VimResized", "WinResized" }, {
   group = vim.api.nvim_create_augroup("transparent_overrides", { clear = true }),
   callback = function()
     local groups = {
@@ -55,6 +55,25 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       "SnacksWinBar",
       "SnacksWinBarNC",
       "SnacksDashboardNormal",
+      "SnacksPicker",
+      "SnacksPickerBorder",
+      "SnacksPickerTitle",
+      "SnacksPickerFooter",
+      "SnacksPickerInput",
+      "SnacksPickerInputBorder",
+      "SnacksPickerInputTitle",
+      "SnacksPickerList",
+      "SnacksPickerListBorder",
+      "SnacksPickerListTitle",
+      "SnacksPickerPreview",
+      "SnacksPickerPreviewBorder",
+      "SnacksPickerPreviewTitle",
+      "SnacksPickerCursorLine",
+      "SnacksExplorerDir",
+      "SnacksExplorerFile",
+      "NeoTreeNormal",
+      "NeoTreeNormalNC",
+      "NeoTreeEndOfBuffer",
     }
     for _, g in ipairs(groups) do
       vim.api.nvim_set_hl(0, g, { bg = "none" })
