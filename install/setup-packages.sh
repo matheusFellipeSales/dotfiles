@@ -31,6 +31,7 @@ PACKAGES=(
 
   # --- Dev ---
   git
+  go
 
   # --- Codecs ---
   gst-libav

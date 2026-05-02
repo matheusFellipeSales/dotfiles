@@ -14,6 +14,7 @@ SETUP_SCRIPTS=(
 
   # 2) Pacotes base
   setup-packages.sh
+  setup-aur.sh
 
   # 3) Shell
   setup-zsh.sh
