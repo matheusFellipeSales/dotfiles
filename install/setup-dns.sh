@@ -5,28 +5,16 @@ set -euo pipefail
 # CONFIGURAR DNS (IPv4 + IPv6) EM UMA CONEXÃO DO NETWORKMANAGER
 # =============================================================================
 
-CYAN='\033[0;36m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-RESET='\033[0m'
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
-info()    { echo -e "${CYAN}==> $*${RESET}"; }
-ok()      { echo -e "${GREEN}    ok: $*${RESET}"; }
-skipped() { echo -e "${YELLOW}    --: $*${RESET}"; }
-err()     { echo -e "${RED}    erro: $*${RESET}"; }
-
-if ! command -v nmcli &>/dev/null; then
-  err "nmcli não encontrado"
-  return 1 2>/dev/null || exit 1
-fi
+need_cmd nmcli "instale NetworkManager primeiro" || _finish 1
 
 # --- 1. Listar conexões -------------------------------------------------------
 mapfile -t CONNS < <(nmcli -t -f NAME,TYPE,DEVICE connection show)
 
 if [[ ${#CONNS[@]} -eq 0 ]]; then
   err "nenhuma conexão encontrada"
-  return 1 2>/dev/null || exit 1
+  _finish 1
 fi
 
 info "Conexões disponíveis:"
@@ -39,7 +27,7 @@ done
 read -rp "$(echo -e "${CYAN}Escolha o número da conexão: ${RESET}")" conn_num
 if ! [[ "$conn_num" =~ ^[0-9]+$ ]] || (( conn_num < 1 || conn_num > ${#CONNS[@]} )); then
   err "seleção inválida"
-  return 1 2>/dev/null || exit 1
+  _finish 1
 fi
 
 IFS=: read -r CONN_NAME _ _ <<<"${CONNS[$((conn_num-1))]}"
@@ -64,7 +52,7 @@ case "$dns_num" in
     ;;
   *)
     err "seleção inválida"
-    return 1 2>/dev/null || exit 1
+    _finish 1
     ;;
 esac
 

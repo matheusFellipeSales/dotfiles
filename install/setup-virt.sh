@@ -5,74 +5,21 @@ set -euo pipefail
 # CONFIGURAÇÃO DE VIRTUALIZAÇÃO (QEMU/KVM + virt-manager)
 # =============================================================================
 
-CYAN='\033[0;36m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RESET='\033[0m'
-
-info()    { echo -e "${CYAN}==> $*${RESET}"; }
-ok()      { echo -e "${GREEN}    ok: $*${RESET}"; }
-skipped() { echo -e "${YELLOW}    --: $*${RESET}"; }
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 PACKAGES=(qemu-full virt-manager swtpm)
 VM_DIR="/var/lib/libvirt"
-
-# --- 1. Btrfs: subvolume + desativar CoW (antes da instalação) ---------------
-info "Verificando sistema de arquivos em /..."
-ROOT_FS="$(findmnt -n -o FSTYPE /)"
-
-if [[ "$ROOT_FS" == "btrfs" ]]; then
-  info "Sistema btrfs detectado."
-
-  info "Verificando subvolume $VM_DIR..."
-  if sudo btrfs subvolume show "$VM_DIR" &>/dev/null; then
-    skipped "subvolume $VM_DIR já existe"
-  else
-    sudo systemctl stop libvirtd 2>/dev/null || true
-    sudo mkdir -p "$(dirname "$VM_DIR")"
-    if [[ -d "$VM_DIR" ]]; then
-      sudo mv "$VM_DIR" "${VM_DIR}.bak"
-    fi
-    sudo btrfs subvolume create "$VM_DIR"
-    if [[ -d "${VM_DIR}.bak" ]]; then
-      sudo mv "${VM_DIR}.bak"/* "$VM_DIR"/ 2>/dev/null || true
-      sudo rm -rf "${VM_DIR}.bak"
-    fi
-    ok "subvolume $VM_DIR criado"
-  fi
-
-  info "Verificando CoW em $VM_DIR..."
-  if lsattr -d "$VM_DIR" 2>/dev/null | grep -q 'C'; then
-    skipped "CoW já desativado em $VM_DIR"
-  else
-    sudo chattr +C "$VM_DIR"
-    ok "CoW desativado em $VM_DIR"
-  fi
-else
-  skipped "sistema de arquivos é '$ROOT_FS', sem configuração btrfs necessária"
-fi
-
-# --- 2. Pacotes ---------------------------------------------------------------
-info "Verificando pacotes..."
-to_install=()
-for pkg in "${PACKAGES[@]}"; do
-  if pacman -Q "$pkg" &>/dev/null; then
-    skipped "$pkg já instalado"
-  else
-    to_install+=("$pkg")
-  fi
-done
-
-if [[ ${#to_install[@]} -gt 0 ]]; then
-  info "Instalando: ${to_install[*]}"
-  sudo pacman -S --noconfirm "${to_install[@]}"
-  ok "pacotes instalados"
-fi
-
-# --- 2. firewall_backend = iptables em network.conf --------------------------
 NETWORK_CONF="/etc/libvirt/network.conf"
 FIREWALL_ENTRY='firewall_backend = "iptables"'
 
+# --- 1. Btrfs prep antes da instalação ---------------------------------------
+btrfs_subvol_nocow "$VM_DIR" libvirtd
+
+# --- 2. Pacotes ---------------------------------------------------------------
+info "Pacotes de virtualização..."
+pacman_install "${PACKAGES[@]}"
+
+# --- 3. firewall_backend = iptables ------------------------------------------
 info "Verificando $NETWORK_CONF..."
 if grep -qF "$FIREWALL_ENTRY" "$NETWORK_CONF" 2>/dev/null; then
   skipped "firewall_backend já configurado"
@@ -82,7 +29,7 @@ else
   ok "firewall_backend adicionado"
 fi
 
-# --- 3. Usuário no grupo libvirt ----------------------------------------------
+# --- 4. Usuário no grupo libvirt ----------------------------------------------
 info "Verificando grupo libvirt para $USER..."
 if id -nG "$USER" | grep -qw libvirt; then
   skipped "$USER já está no grupo libvirt"
@@ -91,18 +38,11 @@ else
   ok "$USER adicionado ao grupo libvirt (efetivo no próximo login)"
 fi
 
-# --- 4. Serviços libvirtd -----------------------------------------------------
-info "Verificando serviços libvirtd..."
-for unit in libvirtd.service libvirtd.socket; do
-  if systemctl is-enabled --quiet "$unit" 2>/dev/null && systemctl is-active --quiet "$unit" 2>/dev/null; then
-    skipped "$unit já habilitado e ativo"
-  else
-    sudo systemctl enable --now "$unit"
-    ok "$unit habilitado e iniciado"
-  fi
-done
+# --- 5. Serviços libvirtd -----------------------------------------------------
+enable_service libvirtd.service
+enable_service libvirtd.socket
 
-# --- 5. Rede default do libvirt com autostart ---------------------------------
+# --- 6. Rede default do libvirt com autostart ---------------------------------
 info "Verificando rede 'default' do libvirt..."
 if sudo virsh net-info default 2>/dev/null | grep -q "Autostart:.*yes"; then
   skipped "rede default já com autostart"
@@ -111,21 +51,15 @@ else
   ok "autostart habilitado na rede default"
 fi
 
-if ! sudo virsh net-info default 2>/dev/null | grep -q "Active:.*yes"; then
+if sudo virsh net-info default 2>/dev/null | grep -q "Active:.*yes"; then
+  skipped "rede default já ativa"
+else
   sudo virsh net-start default 2>/dev/null || true
   ok "rede default iniciada"
-else
-  skipped "rede default já ativa"
 fi
 
-# --- 6. UFW: permitir roteamento da subnet do libvirt ------------------------
-info "Verificando dependência ufw..."
-if ! pacman -Q ufw &>/dev/null; then
-  sudo pacman -S --noconfirm ufw
-  ok "ufw instalado"
-else
-  skipped "ufw já instalado"
-fi
+# --- 7. UFW: permitir roteamento da subnet do libvirt ------------------------
+need_cmd ufw "rode setup-ufw.sh primeiro" || _finish 1
 
 info "Verificando regra UFW para rede virtual..."
 if sudo ufw status verbose 2>/dev/null | grep -q "192.168.122.0/24"; then

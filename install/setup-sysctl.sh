@@ -13,14 +13,7 @@ declare -A SYSCTL_SETTINGS=(
 )
 # =============================================================================
 
-CYAN='\033[0;36m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RESET='\033[0m'
-
-info()    { echo -e "${CYAN}==> $*${RESET}"; }
-ok()      { echo -e "${GREEN}    ok: $*${RESET}"; }
-skipped() { echo -e "${YELLOW}    --: $*${RESET}"; }
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 info "Verificando configurações sysctl..."
 
@@ -37,7 +30,6 @@ for key in "${!SYSCTL_SETTINGS[@]}"; do
 
   echo -e "${CYAN}    ~: $key: $current -> $desired${RESET}"
 
-  # Atualiza ou adiciona apenas esta linha no arquivo
   sudo mkdir -p "$(dirname "$SYSCTL_FILE")"
   if sudo grep -q "^${key}\s*=" "$SYSCTL_FILE" 2>/dev/null; then
     sudo sed -i "s|^${key}\s*=.*|${key} = ${desired}|" "$SYSCTL_FILE"
@@ -50,7 +42,7 @@ done
 
 if ! $needs_apply; then
   ok "Todas as configurações já estão aplicadas."
-  return 0 2>/dev/null || exit 0
+  _finish 0
 fi
 
 info "Aplicando com sysctl --system..."

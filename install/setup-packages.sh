@@ -62,31 +62,8 @@ PACKAGES=(
 
 # =============================================================================
 
-CYAN='\033[0;36m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RESET='\033[0m'
-
-info()    { echo -e "${CYAN}==> $*${RESET}"; }
-ok()      { echo -e "${GREEN}    ok: $*${RESET}"; }
-skipped() { echo -e "${YELLOW}    --: $*${RESET}"; }
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 info "Verificando pacotes..."
-
-to_install=()
-for pkg in "${PACKAGES[@]}"; do
-  if pacman -Q "$pkg" &>/dev/null; then
-    skipped "$pkg já instalado"
-  else
-    to_install+=("$pkg")
-  fi
-done
-
-if [[ ${#to_install[@]} -eq 0 ]]; then
-  ok "Todos os pacotes já estão instalados."
-  return 0 2>/dev/null || exit 0
-fi
-
-info "Instalando ${#to_install[@]} pacote(s): ${to_install[*]}"
-sudo pacman -S --noconfirm "${to_install[@]}"
-ok "Pacotes instalados."
+pacman_install "${PACKAGES[@]}"
+ok "Setup de pacotes concluído."

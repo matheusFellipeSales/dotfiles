@@ -7,34 +7,38 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # SCRIPTS DE SETUP — adicione novos scripts aqui em ordem de execução
 # =============================================================================
 SETUP_SCRIPTS=(
-  setup-bluetooth.sh
-  setup-power-profiles.sh
+  # 1) Kernel/sistema
+  setup-system-services.sh   # bluetooth, power-profiles, disable arch-update
+  setup-io-scheduler.sh      # udev rules (bfq/adios)
   setup-sysctl.sh
-  setup-cachyos.sh
-  setup-chaotic-aur.sh
+
+  # 2) Pacotes base
   setup-packages.sh
+
+  # 3) Shell
   setup-zsh.sh
+  setup-shell-tools.sh       # zoxide, nano-syntax, nvm
+
+  # 4) Rede e segurança
   setup-ufw.sh
   setup-dns.sh
-  setup-docker.sh
-  setup-nano.sh
-  setup-zoxide.sh
-  setup-nvm.sh
-  setup-codex.sh
   setup-l2tp.sh
+
+  # 5) Containers / VMs
+  setup-docker.sh
   setup-virt.sh
-  setup-claude.sh
-  setup-opencode.sh
+
+  # 6) Apps
+  setup-ai-clis.sh           # claude, codex, opencode
   setup-flatpaks.sh
-  setup-gnome.sh
+
+  # 7) Desktop environment
+  setup-gnome-keybindings.sh
+  setup-gnome-weather.sh
 )
 # =============================================================================
 
-GREEN='\033[0;32m'
-CYAN='\033[0;36m'
-RED='\033[0;31m'
-YELLOW='\033[1;33m'
-RESET='\033[0m'
+source "$SCRIPT_DIR/lib/common.sh"
 
 for script in "${SETUP_SCRIPTS[@]}"; do
   path="$SCRIPT_DIR/$script"
@@ -43,13 +47,13 @@ for script in "${SETUP_SCRIPTS[@]}"; do
   echo -e "${CYAN}==============================${RESET}"
 
   if [[ ! -f "$path" ]]; then
-    echo -e "${RED}ERRO: $path não encontrado — pulando${RESET}"
+    err "$path não encontrado — pulando"
     continue
   fi
 
   read -r -p "$(echo -e "${CYAN}Executar $script? [s/N] ${RESET}")" answer
   if [[ "${answer,,}" != "s" ]]; then
-    echo -e "${YELLOW}    --: $script pulado${RESET}"
+    skipped "$script pulado"
     echo ""
     continue
   fi

@@ -5,27 +5,14 @@ set -euo pipefail
 # CONFIGURAÇÃO DO UFW (firewall)
 # =============================================================================
 
-CYAN='\033[0;36m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RESET='\033[0m'
-
-info()    { echo -e "${CYAN}==> $*${RESET}"; }
-ok()      { echo -e "${GREEN}    ok: $*${RESET}"; }
-skipped() { echo -e "${YELLOW}    --: $*${RESET}"; }
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 # --- 1. Pacote ----------------------------------------------------------------
-info "Verificando ufw..."
-if pacman -Q ufw &>/dev/null; then
-  skipped "ufw já instalado"
-else
-  sudo pacman -S --noconfirm ufw
-  ok "ufw instalado"
-fi
+info "ufw..."
+pacman_install ufw
 
 # --- 2. Políticas padrão ------------------------------------------------------
 info "Configurando políticas padrão..."
-
 current_incoming="$(sudo ufw status verbose 2>/dev/null | awk '/^Default:/ { for(i=1;i<=NF;i++) if ($i=="incoming") print $(i-1) }')"
 current_outgoing="$(sudo ufw status verbose 2>/dev/null | awk '/^Default:/ { for(i=1;i<=NF;i++) if ($i=="outgoing") print $(i-1) }')"
 
@@ -53,7 +40,6 @@ else
 fi
 
 # --- 4. Habilitar serviço -----------------------------------------------------
-info "Verificando serviço ufw..."
 if systemctl is-enabled --quiet ufw 2>/dev/null; then
   skipped "serviço ufw já habilitado"
 else

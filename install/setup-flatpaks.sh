@@ -13,30 +13,16 @@ FLATPAKS=(
 )
 # =============================================================================
 
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-CYAN='\033[0;36m'
-RESET='\033[0m'
-
-info()    { echo -e "${CYAN}==> $*${RESET}"; }
-ok()      { echo -e "${GREEN}    ok: $*${RESET}"; }
-skipped() { echo -e "${YELLOW}    --: $*${RESET}"; }
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
 # --- 1. Garantir flatpak instalado -------------------------------------------
-info "Verificando flatpak..."
-if ! command -v flatpak &>/dev/null; then
-  info "Flatpak não encontrado — instalando via pacman..."
-  sudo pacman -S --noconfirm flatpak
-  ok "flatpak instalado"
-else
-  skipped "flatpak já instalado ($(flatpak --version))"
-fi
+info "flatpak..."
+pacman_install flatpak
 
 # --- 2. Remover flathub do sistema, garantir no usuário ----------------------
 info "Configurando remote flathub (escopo usuário)..."
 
 if flatpak remote-list --system 2>/dev/null | grep -q '^flathub'; then
-  info "Removendo flathub do sistema..."
   sudo flatpak remote-delete --system --force flathub
   ok "flathub removido do sistema"
 else
@@ -66,5 +52,4 @@ done
 info "Removendo runtimes não utilizadas..."
 flatpak uninstall --user --unused -y 2>/dev/null || true
 
-echo ""
 ok "Setup de flatpaks concluído."
