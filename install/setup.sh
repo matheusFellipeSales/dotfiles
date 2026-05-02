@@ -36,6 +36,7 @@ SETUP_SCRIPTS=(
   # 7) Desktop environment
   setup-gnome-keybindings.sh
   setup-gnome-weather.sh
+  setup-theme.sh
 )
 # =============================================================================
 
