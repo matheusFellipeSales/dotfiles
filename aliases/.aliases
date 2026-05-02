@@ -31,23 +31,6 @@ alias yro='yay -Rcns $(yay -Qdtq)'                        # Remove pacotes orfã
 alias ys='yay -Ss'                                        # Procura um pacote.
 
 ############################################################################
-# ============================= DISTRO BOX =============================== #
-############################################################################
-# Depende do pacote distrobox instalado no sistema.
-alias ubuntu='distrobox-enter ubuntu'                    # distrobox enter ubuntu
-alias arch='distrobox-enter arch'                        # distrobox enter arch
-
-############################################################################
-# ============================= VAGRANT ================================== #
-############################################################################
-# Depende do pacote vagrant instalado no sistema.
-alias vd='vagrant destroy'                                # Destroi as VMs.
-alias vu='vagrant up'                                     # Sobe as VMs.
-alias vs='vagrant up &&  vagrant ssh'                     # SSH nas VMs.
-alias vh='vagrant halt'                                   # Desliga as VMs.
-
-
-############################################################################
 # ============================= DOCKER  ================================== #
 ############################################################################
 # Depende do docker obviamente.
