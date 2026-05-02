@@ -9,6 +9,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SETUP_SCRIPTS=(
   setup-locale.sh
   setup-networkmanager.sh
+  setup-ioschedulers.sh
 )
 # =============================================================================
 
