@@ -4,7 +4,7 @@ font-family = JetBrainsMono Nerd Font Mono
 font-size = 13
 window-theme = ghostty
 theme = Kanagawa Wave
-background-opacity = 0.98
+background-opacity = 0.99
 background-blur-radius = 10
 cursor-style = block
 cursor-style-blink = true
@@ -18,4 +18,3 @@ confirm-close-surface = false
 window-width=130
 window-height=34
 mouse-scroll-multiplier = 0.25
-keybind = shift+enter=text:\\\r
